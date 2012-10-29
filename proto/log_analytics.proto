@@ -1,4 +1,4 @@
-package log_analytics_proto
+package log_analytics_proto;
 
 message req_msg {
   optional string id       = 1;
