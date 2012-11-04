@@ -14,7 +14,7 @@ class StatsHandler( BaseHandler ):
         
     def read(self, request):
         apiLogger.debug("Begin stats get handler")
-        myprint("data: " + request.data)
+        print "data: ", request.data
 
         if request.content_type == "application/octet-stream":
             pass
