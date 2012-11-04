@@ -23,7 +23,7 @@ message resp_struct {
   repeated visit_struct visit_arr = 6;
 }
 
-message visit_arr {
+message visit_struct {
   optional int64 visit_time = 1; 
   optional int64 num_visits = 2; 
 }
