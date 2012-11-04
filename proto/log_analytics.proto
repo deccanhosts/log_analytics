@@ -1,7 +1,7 @@
 package log_analytics_proto;
 
 message req_msg {
-  optional string id       = 1;
+  optional string req_id   = 1;
   optional string hostname = 2;
   optional int32 scale     = 3; // ENUM(hourly = 1, daily = 2(default), weekly = 3, monthly = 4) 
   optional int64 time_from = 4; 
@@ -9,18 +9,18 @@ message req_msg {
 }
 
 message resp_msg {
-  optional string id = 1;
+  optional string req_id    = 1;
   optional resp_struct resp = 2;
-  optional debug_msg dbg = 3;
+  optional debug_msg dbg    = 3;
 }
 
 message resp_struct {
-  optional int64 page_views       = 1;
-  optional int64 total_visits     = 2;
-  optional int64 unique_visits    = 3;
-  optional int64 pages_per_visit  = 4; 
-  optional int64 visit_duration   = 5;
-  repeated visit_struct visit_arr = 6;
+  optional int64 page_views           = 1;
+  optional int64 total_visits         = 2;
+  optional int64 unique_visits        = 3;
+  optional double pages_per_visit     = 4; 
+  optional int64 avg_visit_duration   = 5;
+  repeated visit_struct visit_arr     = 6;
 }
 
 message visit_struct {
@@ -29,7 +29,7 @@ message visit_struct {
 }
 
 message debug_msg {
-  optional int64 query_time = 1;
-  optional string ctrl_msg  = 2;
+  optional double query_time = 1;
+  optional string ctrl_msg   = 2;
 }
 

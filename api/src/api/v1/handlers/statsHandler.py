@@ -14,18 +14,55 @@ class StatsHandler( BaseHandler ):
         
     def read(self, request):
         apiLogger.debug("Begin stats get handler")
-        tcObj = apiHelper.init(reqId = "NA")
-        print "data: ", request.data
 
         if request.content_type == "application/octet-stream":
             pass
         else:
             return apiHelper.badRequest(code = 101, detail = "Invalid content-type " + str(request.content_type))
         
+        req_obj = log_analytics_proto.req_msg() 
+        try:
+          req_obj.ParseFromString(request.data)
+        except DecodeError, e:
+            return apiHelper.badRequest(code = 102, detail = "Failed to decode protobuf. " + e)
+        
+        if req_obj.req_id is None or \
+           req_obj.hostname is None or \
+           req_obj.time_from is None:
+            return apiHelper.badRequest(code = 103, detail = "Null value specified for REQUIRED fields")
+
+        
+        tcObj = apiHelper.init(reqId = req_obj.req_id)
+        req_id = req_obj.req_id
+  
+        # default scale is 2 - daily
+        scale = req_obj.scale if req_obj.scale is not None else 2
+        hostname = req_obj.hostname
+        time_from = req_obj.time_from
+         
+        # default time_to is current time 
+        time_to = req_obj.time_to if req_obj.time_to is not None else apiHelper.getCurrentTime()
+        retval, err_msg = utils.validateInput(hostname  = hostname, \
+                                              scale     = scale, \
+                                              time_from = time_from, \
+                                              time_to   = time_to)
+
+        if retval is False:
+          return apiHelper.badRequest(code = 104, detail = err_msg)
+        
+        #resp_dict, retval, err_msg = getResponse(hostname = hostname, scale = scale, time_from = time_from, time_to = time_to)
+        #if retval is False:
+        #  return apiHelper.badRequest(code = 105, detail = err_msg)
+        resp_dict = {}
+        resp_dict = apiHelper.getTestRespDict()
+        resp_obj, retval, err_msg = apiHelper.constructRespObj(resp_dict = resp_dict,
+                                                             req_id = req_id)
+        if retval is False:
+          return apiHelper.badRequest(code = 106, detail = err_msg)
+
         resp = rc.ALL_OK
         resp['Content-Type'] = 'application/octet-stream'
-        resp.content = "SAMPLE_RESPONSE"
-        tcObj.debug("Stats handler success, response: " + str(resp))
+        resp.content = resp_obj.SerializeToString()
         return resp
     
     def create(self, request):
