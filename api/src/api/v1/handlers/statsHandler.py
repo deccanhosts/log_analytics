@@ -27,12 +27,12 @@ class StatsHandler( BaseHandler ):
         tcObj.debug("Stats handler success, response: " + str(resp))
         return resp
     
-    def create(self, request)
+    def create(self, request):
       return apiHelper.badRequest(code = 201, detail = "POST method not allowed")
 
-    def update(self, request)
+    def update(self, request):
       return apiHelper.badREquest(code = 301, detail = "PUT method not allowed")
 
-    def delete(self, request)
+    def delete(self, request):
       return apiHelper.badREquest(code = 401, detail = "DELETE method not allowed")
 
