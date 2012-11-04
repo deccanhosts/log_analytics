@@ -9,7 +9,6 @@ import traceback
 # import worker classes/functions
 from src.utils import utils
 from src.utils import threadCache
-from src.utils.utils import myprint
 
 class StatsHandler( BaseHandler ):
         
