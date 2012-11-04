@@ -32,8 +32,8 @@ class StatsHandler( BaseHandler ):
       return apiHelper.badRequest(code = 201, detail = "POST method not allowed")
 
     def update(self, request):
-      return apiHelper.badREquest(code = 301, detail = "PUT method not allowed")
+      return apiHelper.badRequest(code = 301, detail = "PUT method not allowed")
 
     def delete(self, request):
-      return apiHelper.badREquest(code = 401, detail = "DELETE method not allowed")
+      return apiHelper.badRequest(code = 401, detail = "DELETE method not allowed")
 
