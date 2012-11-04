@@ -14,7 +14,7 @@ class StatsHandler( BaseHandler ):
         
     def read(self, request):
         apiLogger.debug("Begin stats get handler")
-        tcObj = apiHelper.init(webSessionId = "NA", userName = "NA")
+        tcObj = apiHelper.init(reqId = "NA")
         print "data: ", request.data
 
         if request.content_type == "application/octet-stream":
