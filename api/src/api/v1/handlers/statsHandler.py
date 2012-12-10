@@ -38,12 +38,12 @@ class StatsHandler( BaseHandler ):
           # default scale is 2 - daily
           req_payload = log_analytics_proto.req_payload_struct()
           try:
-            req_payload.ParseFromString(req_obj.req_payload)
+            req_payload = req_obj.req_payload
           except DecodeError, e:
             return apiHelper.badRequest(code = 104, detail = "Failed to decode protobuf. " + e)
             
           scale = req_payload.scale if req_payload.scale is not None else 2
-          hostname = req_obj.hostname
+          hostname = req_payload.hostname
           time_from = req_payload.time_from
          
         # default time_to is current time 
