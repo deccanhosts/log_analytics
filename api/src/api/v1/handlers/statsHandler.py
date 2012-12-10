@@ -27,38 +27,44 @@ class StatsHandler( BaseHandler ):
             return apiHelper.badRequest(code = 102, detail = "Failed to decode protobuf. " + e)
         
         if req_obj.req_id is None or \
-           req_obj.hostname is None or \
-           req_obj.time_from is None:
+           req_obj.req_type is None:
             return apiHelper.badRequest(code = 103, detail = "Null value specified for REQUIRED fields")
 
-        
         tcObj = apiHelper.init(reqId = req_obj.req_id)
         req_id = req_obj.req_id
   
-        # default scale is 2 - daily
-        scale = req_obj.scale if req_obj.scale is not None else 2
-        hostname = req_obj.hostname
-        time_from = req_obj.time_from
+        if req_obj.req_type == 1:
+        
+          # default scale is 2 - daily
+          req_payload = log_analytics_proto.req_payload_struct()
+          try:
+            req_payload.ParseFromString(req_obj.req_payload)
+          except DecodeError, e:
+            return apiHelper.badRequest(code = 104, detail = "Failed to decode protobuf. " + e)
+            
+          scale = req_payload.scale if req_payload.scale is not None else 2
+          hostname = req_obj.hostname
+          time_from = req_payload.time_from
          
         # default time_to is current time 
-        time_to = req_obj.time_to if req_obj.time_to is not None else apiHelper.getCurrentTime()
-        retval, err_msg = utils.validateInput(hostname  = hostname, \
+          time_to = req_payload.time_to if req_payload.time_to is not None else apiHelper.getCurrentTime()
+          retval, err_msg = utils.validateInput(hostname  = hostname, \
                                               scale     = scale, \
                                               time_from = time_from, \
                                               time_to   = time_to)
 
-        if retval is False:
-          return apiHelper.badRequest(code = 104, detail = err_msg)
+          if retval is False:
+            return apiHelper.badRequest(code = 105, detail = err_msg)
         
         #resp_dict, retval, err_msg = getResponse(hostname = hostname, scale = scale, time_from = time_from, time_to = time_to)
         #if retval is False:
         #  return apiHelper.badRequest(code = 105, detail = err_msg)
-        resp_dict = {}
-        resp_dict = apiHelper.getTestRespDict()
-        resp_obj, retval, err_msg = apiHelper.constructRespObj(resp_dict = resp_dict,
+          resp_dict = {}
+          resp_dict = apiHelper.getTestRespDict()
+          resp_obj, retval, err_msg = apiHelper.constructRespObj(resp_dict = resp_dict,
                                                              req_id = req_id)
-        if retval is False:
-          return apiHelper.badRequest(code = 106, detail = err_msg)
+          if retval is False:
+            return apiHelper.badRequest(code = 106, detail = err_msg)
 
         resp = rc.ALL_OK
         resp['Content-Type'] = 'application/octet-stream'
