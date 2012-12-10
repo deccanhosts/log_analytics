@@ -9,6 +9,7 @@ import traceback
 # import worker classes/functions
 from src.utils import utils
 from src.utils import threadCache
+import base64
 
 class StatsHandler( BaseHandler ):
         
@@ -19,10 +20,12 @@ class StatsHandler( BaseHandler ):
             pass
         else:
             return apiHelper.badRequest(code = 101, detail = "Invalid content-type " + str(request.content_type))
-        
+
+        req_enc_str = request.GET.get('req', '')
+        request_data = base64.b64decode(req_enc_str)
         req_obj = log_analytics_proto.req_msg() 
         try:
-          req_obj.ParseFromString(request.data)
+          req_obj.ParseFromString(request_data)
         except DecodeError, e:
             return apiHelper.badRequest(code = 102, detail = "Failed to decode protobuf. " + e)
         

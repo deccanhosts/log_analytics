@@ -7,10 +7,12 @@ message req_msg {
 }
 message req_payload_struct {
   optional string hostname      = 1;
-  optional int32 scale          = 2; // ENUM(hourly = 1, daily = 2(default), weekly = 3, monthly = 4).only applicable for req_type=1  
+  optional int32 scale          = 2; // ENUM(minutes = 1, hourly = 2, daily = 3(default), weekly = 4, monthly = 5, yearly = 6)
+                                     // only applicable for req_type = 1  
   optional int64 time_from      = 3; // only applicable for req_type = 1
   optional int64 time_to        = 4; // only applicable for req_type = 1
-  optional int64 visitors_count = 5; // only applicable for req_type = 2
+  optional int64 visitors_count = 5; // only applicable for req_type = 2. 
+                                     // It denotes max no. of unique visitors that are to be queried going back in time.
 }
 
 message resp_msg {
@@ -25,14 +27,14 @@ message resp_struct {
   optional int64 unique_visits                           = 3; // only applicable for req_type = 1
   optional double pages_per_visit                        = 4; // only applicable for req_type = 1
   optional int64 avg_visit_duration                      = 5; // only applicable for req_type = 1
-  repeated visit_struct visit_arr_all                    = 6; // only applicable for req_type = 1
-  repeated visit_struct visit_arr_html                   = 7; // only applicable for req_type = 1
-  repeated last_visitors_struct last_visitors_arr        = 8; // only applicable for req_type = 2            
+  repeated visit_struct visit_arr                        = 6; // only applicable for req_type = 1
+  repeated last_visitors_struct last_visitors_arr        = 7; // only applicable for req_type = 2            
 }
 
 message visit_struct {
-  optional int64 visit_time = 1; 
-  optional int64 num_visits = 2; 
+  optional int64 visit_time      = 1; 
+  optional int64 num_visits_all  = 2; 
+  optional int64 num_visits_html = 3; 
 }
 
 message last_visitors_struct {

@@ -153,7 +153,7 @@ def constructRespObj(resp_dict = None, req_id = None):
           visit_struct_obj[i].visit_time = resp_dict["resp_struct"]["visit_struct"][i]["num_visits"]
         #resp_struct_obj.visit_arr[i] = visit_struct_obj
         i = i + 1
-      resp_struct_obj.visit_arr_all = visit_struct_obj  
+      resp_struct_obj.visit_arr = visit_struct_obj  
     resp_obj.resp = resp_struct_obj
   return resp_obj, True, ""
   
