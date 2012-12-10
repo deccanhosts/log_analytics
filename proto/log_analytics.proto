@@ -1,8 +1,8 @@
 package log_analytics_proto;
 
 message req_msg {
-  optional string req_id = 1; 
-  optional int32  req_type = 2; // ENUM(all_visitors_stats = 1, latest_visitors_stats = 2)
+  optional string req_id                  = 1; 
+  optional int32  req_type                = 2; // ENUM(all_visitors_stats = 1, latest_visitors_stats = 2)
   optional req_payload_struct req_payload = 3;        
 }
 message req_payload_struct {
