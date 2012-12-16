@@ -199,7 +199,7 @@ status_t DbDriverImpl::_insert_record_db()
   req_str_stripped = _req_str.substr(0, found);
 
   mongo::BSONObjBuilder b;
-  b.genOID().append("vhost", _vhost_id);
+  b.genOID().append("vhost", vhost_id);
   b.append("remote_host", _remote_host);
   //b.appendTimeT("timestamp", (time_t)_timestamp);
   b.append("timestamp", (double)_timestamp);
