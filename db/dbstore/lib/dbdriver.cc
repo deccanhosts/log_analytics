@@ -177,8 +177,7 @@ status_t DbDriverImpl::_insert_record_db()
                                                 BSON("$inc" << BSON("count" << 1))); 
   }
   else {
-    _conn.insert(DB_UA_COLLECTION_NAME.c_str(), BSON(mongo::GENOID << "user_agent" << _user_agent),
-                                                BSON("$inc" << BSON("count" << 1))); 
+    _conn.insert(DB_UA_COLLECTION_NAME.c_str(), BSON(mongo::GENOID << "user_agent" << _user_agent << "count" << 1)); 
     ua_obj = _conn.findOne(DB_UA_COLLECTION_NAME.c_str(), QUERY("user_agent" << _user_agent));
   }
 
