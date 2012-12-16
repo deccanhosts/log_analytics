@@ -171,11 +171,11 @@ status_t DbDriverImpl::_insert_record_db()
 
   ua_b.append("user_agent", _user_agent);
   mongo::BSONObj ua_p = ua_b.obj();
-  _conn.update(DB_COLLECTION_UA_NAME.c_str(), mongo::BSON("user_agent" << _user_agent),
-                                            mongo::BSON("$inc" << mongo::BSON("count" << 1),
+  _conn.update(DB_UA_COLLECTION_NAME.c_str(), mongo::BSONObj("user_agent" << _user_agent),
+                                            mongo::BSONObj("$inc" << mongo::BSONObj("count" << 1),
                                             upsert = true); 
 
-  auto_ptr<DBClientCursor> cursor = _conn.findOne(DB_COLLECTION_UA_NAME.c_str(), QUERY("user_agent" << _user_agent));
+  std::auto_ptr<mongo::DBClientCursor> cursor = _conn.findOne(DB_UA_COLLECTION_NAME.c_str(), QUERY("user_agent" << _user_agent));
   std::string ua_id = cursor.getStringField("_id");
   std::string req_str_stripped;
   size_t found = _req_str.find_last_of(" ");
