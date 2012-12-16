@@ -157,7 +157,10 @@ status_t DbDriverImpl::_populate_fields(const std::vector<std::string> & tokens)
   if(str2uint(tokens[4], _ret_code) != DB_SUCCESS) {
     std::cerr << "Unable to parse return code from " << tokens[4] << std::endl;
   }
-  if(str2uint(tokens[5], _resp_size) != DB_SUCCESS) {
+  if (tokens[5] == "-"){
+    _resp_size = 0;
+  }
+  else if(str2uint(tokens[5], _resp_size) != DB_SUCCESS) {
     std::cerr << "Unable to parse response size from " << tokens[5] << std::endl;
   }
   
