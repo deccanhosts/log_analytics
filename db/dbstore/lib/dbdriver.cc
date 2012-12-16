@@ -9,7 +9,6 @@
 
 #include <iostream>
 
-using namespace mongo;
 namespace dbdriver {
 
 status_t str2uint(const std::string & str, uint64_t & uintval);
@@ -169,11 +168,11 @@ status_t DbDriverImpl::_populate_fields(const std::vector<std::string> & tokens)
 status_t DbDriverImpl::_insert_record_db()
 {
   _conn.update(DB_UA_COLLECTION_NAME.c_str(), BSON("user_agent" << _user_agent),
-                                            BSON("$inc" << BSON("count" << 1),
+                                            BSON("$inc" << BSON("count" << 1)),
                                             upsert = true); 
 
-  std::auto_ptr<mongo::DBClientCursor> cursor = _conn.findOne(DB_UA_COLLECTION_NAME.c_str(), QUERY("user_agent" << _user_agent));
-  std::string ua_id = cursor.getStringField("_id");
+  mongo::BSONObj ua_obj = _conn.findOne(DB_UA_COLLECTION_NAME.c_str(), QUERY("user_agent" << _user_agent));
+  std::string ua_id = ua_obj.getStringField("_id");
   std::string req_str_stripped;
   size_t found = _req_str.find_last_of(" ");
   req_str_stripped = _req_str.substr(0, found);
