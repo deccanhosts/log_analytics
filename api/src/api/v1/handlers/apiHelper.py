@@ -149,8 +149,10 @@ def constructRespObj(resp_dict = None, req_id = None):
         visit_struct_obj.append(tmp_visit_struct_obj)
         if resp_dict["resp_struct"]["visit_struct"][i]["visit_time"] is not None:
           visit_struct_obj[i].visit_time = resp_dict["resp_struct"]["visit_struct"][i]["visit_time"]
-        if resp_dict["resp_struct"]["visit_struct"][i]["num_visits"] is not None:
-          visit_struct_obj[i].visit_time = resp_dict["resp_struct"]["visit_struct"][i]["num_visits"]
+        if resp_dict["resp_struct"]["visit_struct"][i]["num_visits_all"] is not None:
+          visit_struct_obj[i].num_visits_all = resp_dict["resp_struct"]["visit_struct"][i]["num_visits_all"]
+        if resp_dict["resp_struct"]["visit_struct"][i]["num_visits_html"] is not None:
+          visit_struct_obj[i].num_visits_html = resp_dict["resp_struct"]["visit_struct"][i]["num_visits_html"]
         #resp_struct_obj.visit_arr[i] = visit_struct_obj
         i = i + 1
       resp_struct_obj.visit_arr = visit_struct_obj  

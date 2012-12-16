@@ -12,6 +12,7 @@ status_t DB_SUCCESS        = 0;
 status_t DB_FAILURE        = 1;
 const std::string DB_HOST  = "localhost";
 const std::string DB_COLLECTION_NAME = "local.aplogs";
+const std::string DB_UA_COLLECTION_NAME = "local.useragents";
 
 
 

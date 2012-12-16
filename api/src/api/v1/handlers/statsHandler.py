@@ -69,6 +69,11 @@ class StatsHandler( BaseHandler ):
           if retval is False:
             return apiHelper.badRequest(code = 106, detail = err_msg)
 
+        else if req_obj.req_type == 2:
+          return apiHelper.badRequest(code = 107, detail = "Not yet implemented!!")
+        else:
+          return apiHelper.badRequest(code = 108, detail = "Invalid request type!!")
+
         resp = rc.ALL_OK
         resp['Content-Type'] = 'application/octet-stream'
         resp.content = resp_obj.SerializeToString()

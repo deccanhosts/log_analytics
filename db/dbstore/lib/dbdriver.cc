@@ -167,15 +167,29 @@ status_t DbDriverImpl::_populate_fields(const std::vector<std::string> & tokens)
 
 status_t DbDriverImpl::_insert_record_db()
 {
-  mongo::BSONObjBuilder b;
+  mongo::BSONObjBuilder b, ua_b;
+
+  ua_b.append("user_agent", _user_agent);
+  mongo::BSONObj ua_p = ua_b.obj();
+  _conn.update(DB_COLLECTION_UA_NAME.c_str(), mongo::BSON("user_agent" << _user_agent),
+                                            mongo::BSON("$inc" << mongo::BSON("count" << 1),
+                                            upsert = true); 
+
+  auto_ptr<DBClientCursor> cursor = _conn.findOne(DB_COLLECTION_UA_NAME.c_str(), QUERY("user_agent" << _user_agent));
+  std::string ua_id = cursor.getStringField("_id");
+  std::string req_str_stripped;
+  size_t found = _req_str.find_last_of(" ");
+  req_str_stripped = _req_str.substr(0, found);
+
   b.append("vhost", _vhost);
   b.append("remote_host", _remote_host);
-  b.appendTimeT("timestamp", (time_t)_timestamp);
-  b.append("req_str", _req_str);
+  //b.appendTimeT("timestamp", (time_t)_timestamp);
+  b.append("timestamp", (double)_timestamp);
+  b.append("req_str", req_str_stripped);
   b.append("ret_code", (double)_ret_code);
   b.append("resp_size", (double)_resp_size);
   b.append("referrer", _referrer);
-  b.append("user_agent", _user_agent);
+  b.append("user_agent", ua_id);
   mongo::BSONObj p = b.obj();
 
   _conn.insert(DB_COLLECTION_NAME.c_str(), p);
