@@ -9,6 +9,7 @@
 
 #include <iostream>
 
+using namespace mongo;
 namespace dbdriver {
 
 status_t str2uint(const std::string & str, uint64_t & uintval);
