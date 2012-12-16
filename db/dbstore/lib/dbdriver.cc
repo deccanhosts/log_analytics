@@ -167,7 +167,7 @@ status_t DbDriverImpl::_populate_fields(const std::vector<std::string> & tokens)
 
 status_t DbDriverImpl::_insert_record_db()
 {
-  _conn.update(DB_UA_COLLECTION_NAME.c_str(), BSON(GENOID << "user_agent" << _user_agent),
+  _conn.update(DB_UA_COLLECTION_NAME.c_str(), BSON(mongo::GENOID << "user_agent" << _user_agent),
                                             BSON("$inc" << BSON("count" << 1)),
                                             true); 
 
