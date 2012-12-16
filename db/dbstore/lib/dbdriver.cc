@@ -169,7 +169,7 @@ status_t DbDriverImpl::_insert_record_db()
 {
   _conn.update(DB_UA_COLLECTION_NAME.c_str(), BSON("user_agent" << _user_agent),
                                             BSON("$inc" << BSON("count" << 1)),
-                                            upsert = true); 
+                                            true); 
 
   mongo::BSONObj ua_obj = _conn.findOne(DB_UA_COLLECTION_NAME.c_str(), QUERY("user_agent" << _user_agent));
   std::string ua_id = ua_obj.getStringField("_id");
