@@ -172,12 +172,12 @@ status_t DbDriverImpl::_insert_record_db()
 {
   mongo::BSONObj ua_obj;
   ua_obj = _conn.findOne(DB_UA_COLLECTION_NAME.c_str(), QUERY("user_agent" << _user_agent));
-  if (ua_obj != NULL) {
+  if (!ua_obj.isEmpty()) {
     _conn.update(DB_UA_COLLECTION_NAME.c_str(), BSON("user_agent" << _user_agent),
                                                 BSON("$inc" << BSON("count" << 1))); 
   }
   else {
-    _conn.insert(DB_UA_COLLECTION_NAME.c_str(), BSON(GENOID << "user_agent" << _user_agent),
+    _conn.insert(DB_UA_COLLECTION_NAME.c_str(), BSON(mongo::GENOID << "user_agent" << _user_agent),
                                                 BSON("$inc" << BSON("count" << 1))); 
     ua_obj = _conn.findOne(DB_UA_COLLECTION_NAME.c_str(), QUERY("user_agent" << _user_agent));
   }
@@ -188,7 +188,7 @@ status_t DbDriverImpl::_insert_record_db()
   req_str_stripped = _req_str.substr(0, found);
 
   mongo::BSONObjBuilder b;
-  b.append("vhost", _vhost);
+  b.genOID().append("vhost", _vhost);
   b.append("remote_host", _remote_host);
   //b.appendTimeT("timestamp", (time_t)_timestamp);
   b.append("timestamp", (double)_timestamp);
