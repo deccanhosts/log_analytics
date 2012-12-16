@@ -167,12 +167,12 @@ status_t DbDriverImpl::_populate_fields(const std::vector<std::string> & tokens)
 
 status_t DbDriverImpl::_insert_record_db()
 {
-  _conn.update(DB_UA_COLLECTION_NAME.c_str(), BSON("user_agent" << _user_agent),
+  _conn.update(DB_UA_COLLECTION_NAME.c_str(), BSON(GENOID << "user_agent" << _user_agent),
                                             BSON("$inc" << BSON("count" << 1)),
                                             true); 
 
   mongo::BSONObj ua_obj = _conn.findOne(DB_UA_COLLECTION_NAME.c_str(), QUERY("user_agent" << _user_agent));
-  std::string ua_id = ua_obj.getStringField("_id");
+  std::string ua_id = ua_obj["_id"];
   std::string req_str_stripped;
   size_t found = _req_str.find_last_of(" ");
   req_str_stripped = _req_str.substr(0, found);
