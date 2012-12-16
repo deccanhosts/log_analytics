@@ -167,8 +167,8 @@ status_t DbDriverImpl::_populate_fields(const std::vector<std::string> & tokens)
 
 status_t DbDriverImpl::_insert_record_db()
 {
-  _conn.update(DB_UA_COLLECTION_NAME.c_str(), mongo::BSONObjBuilder("user_agent" << _user_agent),
-                                            mongo::BSONObjBuilder("$inc" << mongo::BSONObjBuilder("count" << 1),
+  _conn.update(DB_UA_COLLECTION_NAME.c_str(), BSON("user_agent" << _user_agent),
+                                            BSON("$inc" << BSON("count" << 1),
                                             upsert = true); 
 
   std::auto_ptr<mongo::DBClientCursor> cursor = _conn.findOne(DB_UA_COLLECTION_NAME.c_str(), QUERY("user_agent" << _user_agent));
