@@ -167,12 +167,8 @@ status_t DbDriverImpl::_populate_fields(const std::vector<std::string> & tokens)
 
 status_t DbDriverImpl::_insert_record_db()
 {
-  mongo::BSONObjBuilder b, ua_b;
-
-  ua_b.append("user_agent", _user_agent);
-  mongo::BSONObj ua_p = ua_b.obj();
-  _conn.update(DB_UA_COLLECTION_NAME.c_str(), mongo::BSONObj("user_agent" << _user_agent),
-                                            mongo::BSONObj("$inc" << mongo::BSONObj("count" << 1),
+  _conn.update(DB_UA_COLLECTION_NAME.c_str(), mongo::BSONObjBuilder("user_agent" << _user_agent),
+                                            mongo::BSONObjBuilder("$inc" << mongo::BSONObjBuilder("count" << 1),
                                             upsert = true); 
 
   std::auto_ptr<mongo::DBClientCursor> cursor = _conn.findOne(DB_UA_COLLECTION_NAME.c_str(), QUERY("user_agent" << _user_agent));
@@ -181,6 +177,7 @@ status_t DbDriverImpl::_insert_record_db()
   size_t found = _req_str.find_last_of(" ");
   req_str_stripped = _req_str.substr(0, found);
 
+  mongo::BSONObjBuilder b;
   b.append("vhost", _vhost);
   b.append("remote_host", _remote_host);
   //b.appendTimeT("timestamp", (time_t)_timestamp);
