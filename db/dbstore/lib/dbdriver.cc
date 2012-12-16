@@ -181,13 +181,25 @@ status_t DbDriverImpl::_insert_record_db()
     ua_obj = _conn.findOne(DB_UA_COLLECTION_NAME.c_str(), QUERY("user_agent" << _user_agent));
   }
 
-  std::string ua_id = ua_obj["_id"];
+  mongo::BSONObj vhost_obj;
+  vhost_obj = _conn.findOne(DB_VHOST_COLLECTION_NAME.c_str(), QUERY("vhost" << _vhost));
+  if (!vhost_obj.isEmpty()) {
+    _conn.update(DB_VHOST_COLLECTION_NAME.c_str(), BSON("vhost" << _vhost),
+                                                BSON("$inc" << BSON("count" << 1))); 
+  }
+  else {
+    _conn.insert(DB_VHOST_COLLECTION_NAME.c_str(), BSON(mongo::GENOID << "vhost" << _vhost << "count" << 1)); 
+    vhost_obj = _conn.findOne(DB_VHOST_COLLECTION_NAME.c_str(), QUERY("vhost" << _vhost));
+  }
+
+  std::string ua_id = ua_obj["_id"].OID().toString();
+  std::string vhost_id = vhost_obj["_id"].OID().toString();
   std::string req_str_stripped;
   size_t found = _req_str.find_last_of(" ");
   req_str_stripped = _req_str.substr(0, found);
 
   mongo::BSONObjBuilder b;
-  b.genOID().append("vhost", _vhost);
+  b.genOID().append("vhost", _vhost_id);
   b.append("remote_host", _remote_host);
   //b.appendTimeT("timestamp", (time_t)_timestamp);
   b.append("timestamp", (double)_timestamp);

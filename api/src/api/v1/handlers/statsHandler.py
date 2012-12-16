@@ -7,6 +7,7 @@ from src.api.v1.settings import apiLogger
 import apiHelper
 import traceback
 # import worker classes/functions
+from src.api.workers import dbWorker
 from src.utils import utils
 from src.utils import threadCache
 import base64
@@ -59,20 +60,20 @@ class StatsHandler( BaseHandler ):
           if retval is False:
             return apiHelper.badRequest(code = 105, detail = err_msg)
         
-        #resp_dict, retval, err_msg = getResponse(hostname = hostname, scale = scale, time_from = time_from, time_to = time_to)
-        #if retval is False:
-        #  return apiHelper.badRequest(code = 105, detail = err_msg)
+        resp_dict, retval, err_msg = dbWorker.getResponse(hostname = hostname, scale = scale, time_from = time_from, time_to = time_to)
+        if retval is False:
+          return apiHelper.badRequest(code = 106, detail = err_msg)
           resp_dict = {}
           resp_dict = apiHelper.getTestRespDict()
           resp_obj, retval, err_msg = apiHelper.constructRespObj(resp_dict = resp_dict,
                                                              req_id = req_id)
           if retval is False:
-            return apiHelper.badRequest(code = 106, detail = err_msg)
+            return apiHelper.badRequest(code = 107, detail = err_msg)
 
         else if req_obj.req_type == 2:
-          return apiHelper.badRequest(code = 107, detail = "Not yet implemented!!")
+          return apiHelper.badRequest(code = 108, detail = "Not yet implemented!!")
         else:
-          return apiHelper.badRequest(code = 108, detail = "Invalid request type!!")
+          return apiHelper.badRequest(code = 109, detail = "Invalid request type!!")
 
         resp = rc.ALL_OK
         resp['Content-Type'] = 'application/octet-stream'
