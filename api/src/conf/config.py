@@ -2,3 +2,4 @@
 env             = "development"
 envList         = ["development", "production", "stage"]
 aplogCollection = "aplogs"
+vhostCollection = "vhosts"
