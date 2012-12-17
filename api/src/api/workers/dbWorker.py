@@ -61,6 +61,7 @@ def populateDict(dbResDict, time_from, time_to, modulo):
     # add code for num_visits_html
     visitAllDict[i]['num_visits_html'] = 0
     idx = idx + modulo
+    i = i + 1
     if idx > time_to:
       break
   return visitAllDict
