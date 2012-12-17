@@ -29,15 +29,14 @@ def getResponse(hostname = None, scale = None, time_from = None, time_to = None)
     workerLogger.error("Error fetching response from backend")
     return None, False, "Error fetching response from backend"
 
-  visitAllDict = []
-  visitAllDict = populateDict(visitAllDict, dbResDict, time_from, time_to, modulo)
+  visitAllDict = populateDict(dbResDict, time_from, time_to, modulo)
   print "visit dict is : ", visitAllDict
   resp_dict = {}
   resp_dict['resp_struct'] = {}
   resp_dict['resp_struct']['visit_struct'] = visitAllDict
   return resp_dict, True, ""
 
-def populateDict(visitAllDict, dbResDict, time_from, time_to, modulo):
+def populateDict(dbResDict, time_from, time_to, modulo):
   idx = time_from
   i = 0
   tmp_dict = {}
@@ -49,6 +48,7 @@ def populateDict(visitAllDict, dbResDict, time_from, time_to, modulo):
       break
 
   i = 0
+  visitAllDict = []
   while True:
     visitAllDict[i] = {}
     visitAllDict[i]['visit_time'] = idx
