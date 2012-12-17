@@ -70,7 +70,7 @@ class StatsHandler( BaseHandler ):
           if retval is False:
             return apiHelper.badRequest(code = 107, detail = err_msg)
 
-        else if req_obj.req_type == 2:
+        elif req_obj.req_type == 2:
           return apiHelper.badRequest(code = 108, detail = "Not yet implemented!!")
         else:
           return apiHelper.badRequest(code = 109, detail = "Invalid request type!!")
