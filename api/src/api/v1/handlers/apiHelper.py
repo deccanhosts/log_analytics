@@ -142,9 +142,11 @@ def constructRespObj(resp_dict = None, req_id = None):
         
     if resp_dict["resp_struct"]["visit_struct"] is not None:
       cnt = len(resp_dict["resp_struct"]["visit_struct"])
+      print "count is : ", cnt
       i = 0
       visit_struct_obj = []
       while i < cnt:
+        print "**********", i , "***********\n"
         tmp_visit_struct_obj = log_analytics_proto.visit_struct()
         visit_struct_obj.append(tmp_visit_struct_obj)
         if resp_dict["resp_struct"]["visit_struct"][i]["visit_time"] is not None:
