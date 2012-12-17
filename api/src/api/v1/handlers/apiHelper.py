@@ -149,11 +149,11 @@ def constructRespObj(resp_dict = None, req_id = None):
         print "**********", i , "***********\n"
         tmp_visit_struct_obj = log_analytics_proto.visit_struct()
         visit_struct_obj.append(tmp_visit_struct_obj)
-        if resp_dict["resp_struct"]["visit_struct"][i]["visit_time"] is not None:
+        if "visit_time" in resp_dict["resp_struct"]["visit_struct"][i]:
           visit_struct_obj[i].visit_time = resp_dict["resp_struct"]["visit_struct"][i]["visit_time"]
-        if resp_dict["resp_struct"]["visit_struct"][i]["num_visits_all"] is not None:
+        if "num_visits_all" in resp_dict["resp_struct"]["visit_struct"][i]:
           visit_struct_obj[i].num_visits_all = resp_dict["resp_struct"]["visit_struct"][i]["num_visits_all"]
-        if resp_dict["resp_struct"]["visit_struct"][i]["num_visits_html"] is not None:
+        if "num_visits_html" in resp_dict["resp_struct"]["visit_struct"][i]:
           visit_struct_obj[i].num_visits_html = resp_dict["resp_struct"]["visit_struct"][i]["num_visits_html"]
         #resp_struct_obj.visit_arr[i] = visit_struct_obj
         i = i + 1
