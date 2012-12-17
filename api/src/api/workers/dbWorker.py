@@ -46,7 +46,7 @@ def populateDict(dbResDict, time_from, time_to, modulo):
     i = i + 1
     if i == tmp_count:
       break
-
+  print "tmp dict:: ", tmp_dict
   i = 0
   visitAllDict = []
   while True:
