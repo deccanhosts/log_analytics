@@ -42,7 +42,7 @@ def populateDict(dbResDict, time_from, time_to, modulo):
   tmp_dict = {}
   tmp_count = len(dbResDict)
   while True:
-    tmp_dict[dbResDict[i]['_id']] = dbResDict[i]['count']
+    tmp_dict[str(dbResDict[i]['_id'])] = dbResDict[i]['count']
     i = i + 1
     if i == tmp_count:
       break
