@@ -63,8 +63,8 @@ class StatsHandler( BaseHandler ):
           resp_dict, retval, err_msg = dbWorker.getResponse(hostname = hostname, scale = scale, time_from = time_from, time_to = time_to)
           if retval is False:
             return apiHelper.badRequest(code = 106, detail = err_msg)
-          resp_dict = {}
-          resp_dict = apiHelper.getTestRespDict()
+          #resp_dict = {}
+          #resp_dict = apiHelper.getTestRespDict()
           resp_obj, retval, err_msg = apiHelper.constructRespObj(resp_dict = resp_dict,
                                                              req_id = req_id)
           if retval is False:
