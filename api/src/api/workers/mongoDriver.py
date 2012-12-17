@@ -23,9 +23,9 @@ def getVisitArrAll(vhost = None, modulo = None, startDate = None, endDate = None
     workerLogger.error("Invalid input parameters")
     return None, "Invalid input params"
 
-    vhost_id = getVhostId(vhost)
-    if vhost_id is None:
-      return None, "vhost " + vhost + " not found"
+  vhost_id = getVhostId(vhost)
+  if vhost_id is None:
+    return None, "vhost " + vhost + " not found"
   pipeline = [
     {'$match': \
       { "$and": \
