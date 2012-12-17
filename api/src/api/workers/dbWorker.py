@@ -54,11 +54,12 @@ def populateDict(dbResDict, time_from, time_to, modulo):
     visitAllDict[i]['visit_time'] = idx
     tmpDictIdx = str(idx) + ".0"
     if tmpDictIdx in tmp_dict:
-      visitAllDict[i]['num_visits'] = tmp_dict[tmpDictIdx]
+      visitAllDict[i]['num_visits_all'] = tmp_dict[tmpDictIdx]
     else:
-      visitAllDict[i]['num_visits'] = 0
+      visitAllDict[i]['num_visits_all'] = 0
     
     # add code for num_visits_html
+    visitAllDict[i]['num_visits_html'] = 0
     idx = idx + modulo
     if idx > time_to:
       break
