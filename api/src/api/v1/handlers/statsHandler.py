@@ -24,7 +24,7 @@ class StatsHandler( BaseHandler ):
 
         req_enc_str = request.GET.get('req', '')
         request_data = base64.b64decode(req_enc_str)
-        req_obj = log_analytics_proto.req_msg() 
+        req_obj = log_analytics_proto.ReqMsg() 
         try:
           req_obj.ParseFromString(request_data)
         except DecodeError, e:
@@ -40,7 +40,7 @@ class StatsHandler( BaseHandler ):
         if req_obj.req_type == 1:
         
           # default scale is 2 - daily
-          req_payload = log_analytics_proto.req_payload_struct()
+          req_payload = log_analytics_proto.ReqPayloadStruct()
           try:
             req_payload = req_obj.req_payload
           except DecodeError, e:

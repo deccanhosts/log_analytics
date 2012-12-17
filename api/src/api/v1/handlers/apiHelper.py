@@ -117,7 +117,7 @@ def constructRespObj(resp_dict = None, req_id = None):
   if req_id is None:
     return None, False, "Request id in response cannot be NULL"
   
-  resp_obj = log_analytics_proto.resp_msg()
+  resp_obj = log_analytics_proto.RespMsg()
   resp_obj.req_id = req_id
   
   if "debug_msg" in resp_dict:
@@ -128,7 +128,7 @@ def constructRespObj(resp_dict = None, req_id = None):
       debug_msg_obj.ctrl_msg = resp_dict["debug_msg"]["ctrl_msg"]
     resp_obj.dbg = debug_msg_obj
   if "resp_struct" in resp_dict:
-    resp_struct_obj = log_analytics_proto.resp_struct()      
+    resp_struct_obj = log_analytics_proto.RespStruct()      
     if "page_views" in resp_dict["resp_struct"]:
       resp_struct_obj.page_views = resp_dict["resp_struct"]["page_views"]
     if "total_visits" in resp_dict["resp_struct"]:
@@ -147,7 +147,7 @@ def constructRespObj(resp_dict = None, req_id = None):
       visit_struct_obj = []
       while i < cnt:
         print "**********", i , "***********\n"
-        tmp_visit_struct_obj = log_analytics_proto.visit_struct()
+        tmp_visit_struct_obj = log_analytics_proto.VisitStruct()
         visit_struct_obj.append(tmp_visit_struct_obj)
         if "visit_time" in resp_dict["resp_struct"]["visit_struct"][i]:
           visit_struct_obj[i].visit_time = resp_dict["resp_struct"]["visit_struct"][i]["visit_time"]
