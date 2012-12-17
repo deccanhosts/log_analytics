@@ -11,7 +11,7 @@ def getVhostId(vhost):
   vhost_id = ""
   if vhost is None:
     return None
-  for find in db[conf.vhostCollection].find({'vhost': vhost}):
+  for find in db[config.vhostCollection].find({'vhost': vhost}):
     vhost_id = str(find["_id"])
     break
   return vhost_id
@@ -49,7 +49,7 @@ def getVisitArrAll(vhost = None, modulo = None, startDate = None, endDate = None
       }\
     }\
   ]
-  q = db.command('aggregate', conf.aplogCollection, pipeline=pipeline)
+  q = db.command('aggregate', config.aplogCollection, pipeline=pipeline)
     
   #q = db.command('aggregate', 'aplogs', pipeline=pipeline, explain = True)
   return q["result"], ""
@@ -83,7 +83,7 @@ def getVisitArrAllHtml(vhost = None, modulo = None, startDate = None, endDate = 
       }\
     }\
   ]
-  q = db.command('aggregate', conf.aplogCollection, pipeline=pipeline)
+  q = db.command('aggregate', config.aplogCollection, pipeline=pipeline)
     
   #q = db.command('aggregate', 'aplogs', pipeline=pipeline, explain = True)
   return q["result"], ""

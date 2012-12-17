@@ -1,6 +1,5 @@
 from src.utils import customLogger
 from src.api.workers import mongoDriver
-from conf import config
 workerLogger = customLogger.getWorkerLogger()
 def getResponse(hostname = None, scale = None, time_from = None, time_to = None):
   if hostname is None or scale is None or time_from is None or time_to is None:
