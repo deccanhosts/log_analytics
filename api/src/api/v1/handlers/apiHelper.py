@@ -120,27 +120,27 @@ def constructRespObj(resp_dict = None, req_id = None):
   resp_obj = log_analytics_proto.resp_msg()
   resp_obj.req_id = req_id
   
-  if resp_dict["debug_msg"] is not None:
+  if "debug_msg" in resp_dict:
     debug_msg_obj = log_analytics_proto.debug_msg()
     if resp_dict["debug_msg"]["query_time"] is not None:
       debug_msg_obj.query_time = resp_dict["debug_msg"]["query_time"]
     if resp_dict["debug_msg"]["ctrl_msg"] is not None:
       debug_msg_obj.ctrl_msg = resp_dict["debug_msg"]["ctrl_msg"]
     resp_obj.dbg = debug_msg_obj
-  if resp_dict["resp_struct"] is not None:
+  if "resp_struct" in resp_dict:
     resp_struct_obj = log_analytics_proto.resp_struct()      
-    if resp_dict["resp_struct"]["page_views"] is not None:
+    if "page_views" in resp_dict["resp_struct"]:
       resp_struct_obj.page_views = resp_dict["resp_struct"]["page_views"]
-    if resp_dict["resp_struct"]["total_visits"] is not None:
+    if "total_visits" in resp_dict["resp_struct"]:
       resp_struct_obj.total_visits = resp_dict["resp_struct"]["total_visits"]
-    if resp_dict["resp_struct"]["unique_visits"] is not None:
+    if "unique_visits" in resp_dict["resp_struct"]:
       resp_struct_obj.unique_visits = resp_dict["resp_struct"]["unique_visits"]
-    if resp_dict["resp_struct"]["pages_per_visit"] is not None:
+    if "pages_per_visit" in resp_dict["resp_struct"]:
       resp_struct_obj.pages_per_visit = resp_dict["resp_struct"]["pages_per_visit"]
-    if resp_dict["resp_struct"]["avg_visit_duration"] is not None:
+    if "avg_visit_duration" in resp_dict["resp_struct"]:
       resp_struct_obj.avg_visit_duration = resp_dict["resp_struct"]["avg_visit_duration"]
         
-    if resp_dict["resp_struct"]["visit_struct"] is not None:
+    if "visit_struct" in resp_dict["resp_struct"]:
       cnt = len(resp_dict["resp_struct"]["visit_struct"])
       print "count is : ", cnt
       i = 0

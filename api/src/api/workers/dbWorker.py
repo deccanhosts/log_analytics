@@ -30,11 +30,13 @@ def getResponse(hostname = None, scale = None, time_from = None, time_to = None)
     return None, False, "Error fetching response from backend"
 
   visitAllDict = populateDict(dbResDict, time_from, time_to, modulo)
-  print "visit dict is : ", visitAllDict
+  #print "visit dict is : ", visitAllDict
   resp_dict = {}
   resp_dict['resp_struct'] = {}
   resp_dict['resp_struct']['visit_struct'] = visitAllDict
   print "resp dict:: ", resp_dict
+  cnt = len(resp_dict["resp_struct"]["visit_struct"])
+  print "count is : ", cnt, "***********\n"
   return resp_dict, True, ""
 
 def populateDict(dbResDict, time_from, time_to, modulo):
