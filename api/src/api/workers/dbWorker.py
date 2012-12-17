@@ -52,7 +52,6 @@ def populateDict(dbResDict, time_from, time_to, modulo):
   while True:
     visitAllDict.append({})
     visitAllDict[i]['visit_time'] = idx
-    print "idx:: " , str(idx)
     tmpDictIdx = str(idx) + ".0"
     if tmpDictIdx in tmp_dict:
       visitAllDict[i]['num_visits_all'] = tmp_dict[tmpDictIdx]

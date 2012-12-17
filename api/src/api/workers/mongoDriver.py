@@ -35,12 +35,12 @@ def getVisitArrAll(vhost = None, modulo = None, startDate = None, endDate = None
       }\
     },
     {'$project': \
-      {'dateLowerBound': modulo\
-      #  { "$subtract": \
-      #    ['$timestamp', 
-      #      {"$mod": ['$timestamp', modulo]\
-      #   }]\
-      #  }\
+      {'dateLowerBound': \
+        { "$subtract": \
+          ['$timestamp', 
+            {"$mod": ['$timestamp', modulo]\
+         }]\
+        }\
       }\
     },
     {'$group': 
