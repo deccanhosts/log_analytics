@@ -23,7 +23,7 @@ def getResponse(hostname = None, scale = None, time_from = None, time_to = None)
     return None, False, "Invalid scale"
   
   dbResDict = None
-  dbResDict, errmsg = mongoDriver.getVisitArrAll(vhost = hostname, modulo = scale,\
+  dbResDict, errmsg = mongoDriver.getVisitArrAll(vhost = hostname, modulo = modulo,\
                              startDate = time_from, endDate = time_to)
   if errmsg is None:
     workerLogger.error("Error fetching response from backend")
@@ -52,6 +52,7 @@ def populateDict(dbResDict, time_from, time_to, modulo):
   while True:
     visitAllDict.append({})
     visitAllDict[i]['visit_time'] = idx
+    print "idx:: " , str(idx)
     tmpDictIdx = str(idx) + ".0"
     if tmpDictIdx in tmp_dict:
       visitAllDict[i]['num_visits_all'] = tmp_dict[tmpDictIdx]
