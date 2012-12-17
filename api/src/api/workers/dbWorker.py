@@ -1,8 +1,7 @@
 from src.utils import customLogger
 from src.api.workers import mongoDriver
 workerLogger = customLogger.getWorkerLogger()
-
-getResponse(hostname = None, scale = None, time_from = None, time_to = None):
+def getResponse(hostname = None, scale = None, time_from = None, time_to = None):
   if hostname is None or scale is None or time_from is None or time_to is None:
     workerLogger.error("Invalid input parameters")
     return None, False, "Invalid input parameters"
@@ -38,7 +37,7 @@ getResponse(hostname = None, scale = None, time_from = None, time_to = None):
   resp_dict['resp_struct']['visit_struct'] = visitAllDict
   return resp_dict, True, ""
 
-populateDict(visitAllDict, dbResDict, time_from, time_to, modulo):
+def populateDict(visitAllDict, dbResDict, time_from, time_to, modulo):
   idx = time_from
   i = 0
   tmp_dict = {}

@@ -7,7 +7,7 @@ workerLogger = customLogger.getWorkerLogger()
 connection = Connection()
 db = connection.local
 
-getVhostId(vhost):
+def getVhostId(vhost):
   vhost_id = ""
   if vhost is None:
     return None
@@ -17,7 +17,7 @@ getVhostId(vhost):
   return vhost_id
 
 
-getVisitArrAll(vhost = None, modulo = None, startDate = None, endDate = None):
+def getVisitArrAll(vhost = None, modulo = None, startDate = None, endDate = None):
   if vhost is None or startDate is None or endDate is None\
      or modulo is None:
     workerLogger.error("Invalid input parameters")
@@ -54,7 +54,7 @@ getVisitArrAll(vhost = None, modulo = None, startDate = None, endDate = None):
   #q = db.command('aggregate', 'aplogs', pipeline=pipeline, explain = True)
   return q["result"], ""
 
-getVisitArrAllHtml(vhost = None, modulo = None, startDate = None, endDate = None):
+def getVisitArrAllHtml(vhost = None, modulo = None, startDate = None, endDate = None):
   if vhost is None or startDate is None or endDate is None\
      or modulo is None:
     workerLogger.error("Invalid input parameters")
