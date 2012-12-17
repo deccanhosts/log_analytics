@@ -1,11 +1,11 @@
 package log_analytics_proto;
 
-message req_msg {
+message ReqMsg {
   optional string req_id                  = 1; 
   optional int32  req_type                = 2; // ENUM(all_visitors_stats = 1, latest_visitors_stats = 2)
-  optional req_payload_struct req_payload = 3;        
+  optional ReqPayloadStruct req_payload = 3;        
 }
-message req_payload_struct {
+message ReqPayloadStruct {
   optional string hostname      = 1;
   optional int32 scale          = 2; // ENUM(minutes = 1, hourly = 2, daily = 3(default), weekly = 4, monthly = 5, yearly = 6)
                                      // only applicable for req_type = 1  
@@ -15,35 +15,35 @@ message req_payload_struct {
                                      // It denotes max no. of unique visitors that are to be queried going back in time.
 }
 
-message resp_msg {
+message RespMsg {
   optional string req_id    = 1;
-  optional resp_struct resp = 2;
-  optional debug_msg dbg    = 3;
+  optional RespStruct resp = 2;
+  optional DebugMsg dbg    = 3;
 }
 
-message resp_struct {
+message RespStruct {
   optional int64 page_views                              = 1; // only applicable for req_type = 1
   optional int64 total_visits                            = 2; // only applicable for req_type = 1
   optional int64 unique_visits                           = 3; // only applicable for req_type = 1
   optional double pages_per_visit                        = 4; // only applicable for req_type = 1
   optional int64 avg_visit_duration                      = 5; // only applicable for req_type = 1
-  repeated visit_struct visit_arr                        = 6; // only applicable for req_type = 1
-  repeated last_visitors_struct last_visitors_arr        = 7; // only applicable for req_type = 2            
+  repeated VisitStruct visit_arr                        = 6; // only applicable for req_type = 1
+  repeated LastVisitorsStruct last_visitors_arr        = 7; // only applicable for req_type = 2            
 }
 
-message visit_struct {
+message VisitStruct {
   optional int64 visit_time      = 1; 
   optional int64 num_visits_all  = 2; 
   optional int64 num_visits_html = 3; 
 }
 
-message last_visitors_struct {
+message LastVisitorsStruct {
   optional string ip_addr            = 1;
   optional int64  last_hit_timestamp = 2;
   optional int64 hit_count           = 3;
 }
 
-message debug_msg {
+message DebugMsg {
   optional double query_time = 1;
   optional string ctrl_msg   = 2;
 }
