@@ -40,8 +40,8 @@ def getVisitArrAll(vhost = None, modulo = None, startDate = None, endDate = None
           ['$timestamp',
             {"$mod": [
               {"$subtract": \
-                 '$timestamp', startDate
-              },
+                 '$timestamp', startDate\
+              },\
             modulo]\
          }]\
         }\
