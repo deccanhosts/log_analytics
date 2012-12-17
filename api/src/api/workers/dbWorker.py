@@ -41,7 +41,7 @@ def populateDict(visitAllDict, dbResDict, time_from, time_to, modulo):
   idx = time_from
   i = 0
   tmp_dict = {}
-  tmp_count = dbResDict.size()
+  tmp_count = length(dbResDict)
   while True:
     tmp_dict[dbResDict[i]['_id']] = dbResDict[i]['count']
     i = i + 1
