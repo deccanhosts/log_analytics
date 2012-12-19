@@ -22,7 +22,8 @@ def getVisitArrAll(vhost = None, modulo = None, startDate = None, endDate = None
      or modulo is None:
     workerLogger.error("Invalid input parameters")
     return None, "Invalid input params"
-
+  
+  endTimestamp = endDate + modulo
   vhost_id = getVhostId(vhost)
   if vhost_id is None:
     return None, "vhost " + vhost + " not found"
@@ -31,7 +32,7 @@ def getVisitArrAll(vhost = None, modulo = None, startDate = None, endDate = None
       { "$and": \
         [{'vhost': vhost_id}, \
          {'timestamp': {"$gte" : startDate,\
-                        "$lte" : endDate}}]\
+                        "$lte" : endTimestamp}}]\
       }\
     },
     {'$project': \
@@ -62,12 +63,13 @@ def getVisitArrAllHtml(vhost = None, modulo = None, startDate = None, endDate = 
     workerLogger.error("Invalid input parameters")
     return None, "Invalid input params"
 
+  endTimestamp = endDate + modulo
   pipeline = [
     {'$match': \
       { "$and": \
         [{'vhost': vhost}, \
          {'timestamp': {"$gte" : startDate,\
-                        "$lte" : endDate}}]\
+                        "$lte" : endTimestamp}}]\
       }\
     },
     {'$project': \

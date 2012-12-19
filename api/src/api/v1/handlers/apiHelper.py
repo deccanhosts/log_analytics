@@ -146,7 +146,6 @@ def constructRespObj(resp_dict = None, req_id = None):
       i = 0
       visit_struct_obj = []
       while i < cnt:
-        print "**********", i , "***********\n"
         tmp_visit_struct_obj = log_analytics_proto.VisitStruct()
         visit_struct_obj.append(tmp_visit_struct_obj)
         if "visit_time" in resp_dict["resp_struct"]["visit_struct"][i]:
