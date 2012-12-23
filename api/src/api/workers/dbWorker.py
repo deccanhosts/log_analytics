@@ -1,5 +1,10 @@
 from src.utils import customLogger
 from src.api.workers import mongoDriver
+from dateutil.relativedelta import relativedelta
+import datetime
+from datetime import datetime
+import calendar
+
 workerLogger = customLogger.getWorkerLogger()
 def getResponse(hostname = None, scale = None, time_from = None, time_to = None):
   if hostname is None or scale is None or time_from is None or time_to is None:
@@ -22,19 +27,60 @@ def getResponse(hostname = None, scale = None, time_from = None, time_to = None)
     workerLogger.error("Invalid scale")
     return None, False, "Invalid scale"
   
-  dbResDictAll = None
-  dbResDictAll, errmsg = mongoDriver.getVisitArrAll(vhost = hostname, modulo = modulo,\
+  if scale != 6:
+    dbResDictAll = None
+    dbResDictAll, errmsg = mongoDriver.getVisitArrAll(vhost = hostname, modulo = modulo,\
                              startDate = time_from, endDate = time_to)
-  if errmsg is None:
-    workerLogger.error("Error fetching response from backend")
-    return None, False, "Error fetching response from backend"
+    if errmsg is None:
+      workerLogger.error("Error fetching response from backend")
+      return None, False, "Error fetching response from backend"
 
-  dbResDictHtml = None
-  dbResDictHtml, errmsg = mongoDriver.getVisitArrHtml(vhost = hostname, modulo = modulo,\
+    dbResDictHtml = None
+    dbResDictHtml, errmsg = mongoDriver.getVisitArrHtml(vhost = hostname, modulo = modulo,\
                              startDate = time_from, endDate = time_to)
-  if errmsg is None:
-    workerLogger.error("Error fetching response from backend")
-    return None, False, "Error fetching response from backend"
+    if errmsg is None:
+      workerLogger.error("Error fetching response from backend")
+      return None, False, "Error fetching response from backend"
+
+  else:
+    i = 1
+    dbResDictAll  = []
+    dbResDictHtml = []
+    time_from_datetime = time_from.utcfromtimestamp(time_from)
+    while (i < 13):
+      startDate = calendar.timegm((time_from_datetime + relativedelta(months=+(i - 1))).timetuple())
+      endDate = calendar.timegm((time_from_datetime + relativedelta(months=+i)).timetuple()) - 1
+      print "startDate:: ", startDate
+      print "endDate:: ", endDate
+      modulo = endDate
+      tmpResDictAll = None
+      tmpResDictAll, errmsg = mongoDriver.getVisitArrAll(vhost = hostname, modulo = modulo,\
+                             startDate = startDate, endDate = endDate)
+
+      dbResDictAll.append({})
+      if len(tmpRespDictAll) > 0:
+        dbResDictAll[i - 1]['count'] = tmpResDictAll[0]['count']
+      else:
+        dbResDictAll[i - 1]['count'] = 0
+
+      if errmsg is None:
+        workerLogger.error("Error fetching response from backend")
+        return None, False, "Error fetching response from backend"
+
+      tmpResDictHtml = None
+      tmpResDictHtml, errmsg = mongoDriver.getVisitArrHtml(vhost = hostname, modulo = modulo,\
+                             startDate = startDate, endDate = endDate)
+      if errmsg is None:
+        workerLogger.error("Error fetching response from backend")
+        return None, False, "Error fetching response from backend"
+      
+      dbResDictHtml.append({})
+      if len(tmpRespDictHtml) > 0:
+        dbResDictHtml[i - 1]['count'] = tmpResDictHtml[0]['count']
+      else:
+        dbResDictHtml[i - 1]['count'] = 0
+
+      i = i + 1   
 
   visitDict = populateDict(dbResDictAll, dbResDictHtml, time_from, time_to, modulo)
   #print "visit dict is : ", visitAllDict
@@ -45,6 +91,7 @@ def getResponse(hostname = None, scale = None, time_from = None, time_to = None)
   cnt = len(resp_dict["resp_struct"]["visit_struct"])
   print "count is : ", cnt, "***********\n"
   return resp_dict, True, ""
+
 
 def populateDict(dbResDictAll, dbResDictHtml, time_from, time_to, modulo):
   idx = time_from
