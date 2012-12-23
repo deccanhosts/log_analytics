@@ -22,54 +22,78 @@ def getResponse(hostname = None, scale = None, time_from = None, time_to = None)
     workerLogger.error("Invalid scale")
     return None, False, "Invalid scale"
   
-  dbResDict = None
-  dbResDict, errmsg = mongoDriver.getVisitArrAll(vhost = hostname, modulo = modulo,\
+  dbResDictAll = None
+  dbResDictAll, errmsg = mongoDriver.getVisitArrAll(vhost = hostname, modulo = modulo,\
                              startDate = time_from, endDate = time_to)
   if errmsg is None:
     workerLogger.error("Error fetching response from backend")
     return None, False, "Error fetching response from backend"
 
-  visitAllDict = populateDict(dbResDict, time_from, time_to, modulo)
+  dbResDictHtml = None
+  dbResDictHtml, errmsg = mongoDriver.getVisitArrHtml(vhost = hostname, modulo = modulo,\
+                             startDate = time_from, endDate = time_to)
+  if errmsg is None:
+    workerLogger.error("Error fetching response from backend")
+    return None, False, "Error fetching response from backend"
+
+  visitDict = populateDict(dbResDictAll, dbResDictHtml, time_from, time_to, modulo)
   #print "visit dict is : ", visitAllDict
   resp_dict = {}
   resp_dict['resp_struct'] = {}
-  resp_dict['resp_struct']['visit_struct'] = visitAllDict
+  resp_dict['resp_struct']['visit_struct'] = visitDict
   print "resp dict:: ", resp_dict
   cnt = len(resp_dict["resp_struct"]["visit_struct"])
   print "count is : ", cnt, "***********\n"
   return resp_dict, True, ""
 
-def populateDict(dbResDict, time_from, time_to, modulo):
+def populateDict(dbResDictAll, dbResDictHtml, time_from, time_to, modulo):
   idx = time_from
   i = 0
   tmp_dict = {}
-  tmp_count = len(dbResDict)
+  tmp_count = len(dbResDictAll)
   while True:
     if tmp_count == 0:
       break
-    tmp_dict[str(dbResDict[i]['_id'])] = dbResDict[i]['count']
+    tmp_dict[str(dbResDictAll[i]['_id'])] = dbResDictAll[i]['count']
     i = i + 1
     if i == tmp_count:
       break
   print "tmp dict:: ", tmp_dict
+
   i = 0
-  visitAllDict = []
+  tmp_dict2 = {}
+  tmp_count2 = len(dbResDictHtml)
   while True:
-    visitAllDict.append({})
-    visitAllDict[i]['visit_time'] = idx
+    if tmp_count2 == 0:
+      break
+    tmp_dict2[str(dbResDictHtml[i]['_id'])] = dbResDictHtml[i]['count']
+    i = i + 1
+    if i == tmp_count2:
+      break
+  print "tmp dict html:: ", tmp_dict2
+ 
+
+  i = 0
+  visitDict = []
+  while True:
+    visitDict.append({})
+    visitDict[i]['visit_time'] = idx
     tmpDictIdx = str(idx) + ".0"
     if tmpDictIdx in tmp_dict:
-      visitAllDict[i]['num_visits_all'] = tmp_dict[tmpDictIdx]
+      visitDict[i]['num_visits_all'] = tmp_dict[tmpDictIdx]
     else:
-      visitAllDict[i]['num_visits_all'] = 0
+      visitDict[i]['num_visits_all'] = 0
     
-    # add code for num_visits_html
-    visitAllDict[i]['num_visits_html'] = 0
+    if tmpDictIdx in tmp_dict2:
+      visitDict[i]['num_visits_html'] = tmp_dict2[tmpDictIdx]
+    else:
+      visitDict[i]['num_visits_html'] = 0
+
     idx = idx + modulo
     i = i + 1
     if idx > time_to:
       break
-  return visitAllDict
+  return visitDict
    
   
   

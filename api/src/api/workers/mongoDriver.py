@@ -57,7 +57,7 @@ def getVisitArrAll(vhost = None, modulo = None, startDate = None, endDate = None
   #q = db.command('aggregate', 'aplogs', pipeline=pipeline, explain = True)
   return q["result"], ""
 
-def getVisitArrAllHtml(vhost = None, modulo = None, startDate = None, endDate = None):
+def getVisitArrHtml(vhost = None, modulo = None, startDate = None, endDate = None):
   if vhost is None or startDate is None or endDate is None\
      or modulo is None:
     workerLogger.error("Invalid input parameters")
@@ -69,7 +69,9 @@ def getVisitArrAllHtml(vhost = None, modulo = None, startDate = None, endDate = 
       { "$and": \
         [{'vhost': vhost}, \
          {'timestamp': {"$gte" : startDate,\
-                        "$lte" : endTimestamp}}]\
+                        "$lte" : endTimestamp}},\
+         {'req_str': {"$not": "/((\.jpg|\.jpeg|\.png|\.js|\.css|\.gif|\.ico)$)|((\.jpg|\.jpeg|\.png|\.js|\.css|\.gif|\.ico)\?.*$)/"}}\
+        ]\
       }\
     },
     {'$project': \
