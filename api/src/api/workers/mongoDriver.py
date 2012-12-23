@@ -65,21 +65,26 @@ def getVisitArrHtml(vhost = None, modulo = None, startDate = None, endDate = Non
     return None, "Invalid input params"
 
   endTimestamp = endDate + modulo
+  vhost_id = getVhostId(vhost)
+  if vhost_id is None:
+    return None, "vhost " + vhost + " not found"
   pipeline = [
     {'$match': \
       { "$and": \
-        [{'vhost': vhost}, \
+        [{'vhost': vhost_id}, \
          {'timestamp': {"$gte" : startDate,\
                         "$lte" : endTimestamp}},\
          {'req_str': {"$not": re.compile("((\.jpg|\.jpeg|\.png|\.js|\.css|\.gif|\.ico)$)|((\.jpg|\.jpeg|\.png|\.js|\.css|\.gif|\.ico)\?.*$)")}}\
-        ]\
+]\
       }\
     },
     {'$project': \
       {'dateLowerBound': \
         { "$subtract": \
-          ['$timestamp', 
-            {"$mod": ['$timestamp', modulo]\
+          ['$timestamp',\
+            {"$mod": [\
+              {"$subtract": ['$timestamp', startDate]},\
+            modulo]\
          }]\
         }\
       }\
