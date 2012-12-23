@@ -71,7 +71,7 @@ def getVisitArrHtml(vhost = None, modulo = None, startDate = None, endDate = Non
         [{'vhost': vhost}, \
          {'timestamp': {"$gte" : startDate,\
                         "$lte" : endTimestamp}},\
-         {'req_str': {"$ne": re.compile("((\.jpg|\.jpeg|\.png|\.js|\.css|\.gif|\.ico)$)|((\.jpg|\.jpeg|\.png|\.js|\.css|\.gif|\.ico)\?.*$)")}}\
+         {'req_str': {"$not": re.compile("((\.jpg|\.jpeg|\.png|\.js|\.css|\.gif|\.ico)$)|((\.jpg|\.jpeg|\.png|\.js|\.css|\.gif|\.ico)\?.*$)")}}\
         ]\
       }\
     },
