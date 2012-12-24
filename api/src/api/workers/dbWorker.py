@@ -42,6 +42,8 @@ def getResponse(hostname = None, scale = None, time_from = None, time_to = None)
       workerLogger.error("Error fetching response from backend")
       return None, False, "Error fetching response from backend"
 
+    visitDict = populateDict(dbResDictAll, dbResDictHtml, time_from, time_to, modulo)
+
   else:
     i = 0
     dbResDictAll  = []
@@ -49,7 +51,8 @@ def getResponse(hostname = None, scale = None, time_from = None, time_to = None)
     time_from_datetime = time_from.utcfromtimestamp(time_from)
     startDate = calendar.timegm((time_from_datetime + relativedelta(day=1)).timetuple())
     endDate = calendar.timegm((time_from_datetime + relativedelta(day=1, months=+1, days=-1)).timetuple()) - 1
-    while (i < 12):
+    visitDict = []
+    while i < 12:
       print "startDate:: ", startDate
       print "endDate:: ", endDate
       modulo = endDate
@@ -58,10 +61,12 @@ def getResponse(hostname = None, scale = None, time_from = None, time_to = None)
                              startDate = startDate, endDate = endDate)
 
       dbResDictAll.append({})
+      visitDict.append({})
       if len(tmpRespDictAll) > 0:
         dbResDictAll[i]['count'] = tmpResDictAll[0]['count']
       else:
         dbResDictAll[i]['count'] = 0
+      
 
       if errmsg is None:
         workerLogger.error("Error fetching response from backend")
@@ -79,11 +84,15 @@ def getResponse(hostname = None, scale = None, time_from = None, time_to = None)
         dbResDictHtml[i - 1]['count'] = tmpResDictHtml[0]['count']
       else:
         dbResDictHtml[i - 1]['count'] = 0
+
+      visitDict[i]['visit_time'] = startDate
+      visitDict[i]['num_visits_all'] = dbResDictAll[i]['count']
+      visitDict[i]['num_visits_html'] = dbResDictHtml[i]['count']
+
       startDate = calendar.timegm((time_from_datetime + relativedelta(day=1, months=+i)).timetuple())
       endDate = calendar.timegm((time_from_datetime + relativedelta(day=1, months=+i, days=-1)).timetuple()) - 1
       i = i + 1   
 
-  visitDict = populateDict(dbResDictAll, dbResDictHtml, time_from, time_to, modulo)
   #print "visit dict is : ", visitAllDict
   resp_dict = {}
   resp_dict['resp_struct'] = {}
