@@ -50,7 +50,7 @@ def getResponse(hostname = None, scale = None, time_from = None, time_to = None)
     dbResDictHtml = []
     time_from_datetime = datetime.utcfromtimestamp(time_from)
     startDate = calendar.timegm((time_from_datetime + relativedelta(day=1)).timetuple())
-    endDate = calendar.timegm((time_from_datetime + relativedelta(day=1, months=+1, days=-1)).timetuple()) -1
+    endDate = calendar.timegm((time_from_datetime + relativedelta(day=1, months=+1, days=-1)).timetuple()) + 86400 - 1
     modulo = endDate - startDate
     visitDict = []
     while i < 13:
@@ -93,7 +93,7 @@ def getResponse(hostname = None, scale = None, time_from = None, time_to = None)
       i = i + 1
       endDate_datetime = datetime.utcfromtimestamp(endDate + 1)  
       startDate = calendar.timegm((endDate_datetime  + relativedelta(day=1)).timetuple())
-      endDate = calendar.timegm((endDate_datetime + relativedelta(day=1, months=+1, days=-1)).timetuple()) -1
+      endDate = calendar.timegm((endDate_datetime + relativedelta(day=1, months=+1, days=-1)).timetuple()) + 86400 - 1
 
   #print "visit dict is : ", visitAllDict
   resp_dict = {}
