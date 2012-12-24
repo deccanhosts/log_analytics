@@ -58,7 +58,6 @@ def getResponse(hostname = None, scale = None, time_from = None, time_to = None)
       print "endDate:: ", endDate
       tmpResDictAll = None
       modulo = endDate - startDate 
-      endDate = startDate
       tmpResDictAll, errmsg = mongoDriver.getVisitArrAll(vhost = hostname, modulo = modulo,\
                              startDate = startDate, endDate = endDate)
 
@@ -92,8 +91,8 @@ def getResponse(hostname = None, scale = None, time_from = None, time_to = None)
       visitDict[i]['num_visits_html'] = dbResDictHtml[i]['count']
 
       i = i + 1   
-      startDate = calendar.timegm((time_from_datetime + relativedelta(day=1, months=+i)).timetuple()) 
-      endDate = calendar.timegm((time_from_datetime + relativedelta(day=1, months=+i, days=-1)).timetuple()) -1
+      startDate = calendar.timegm((endDate + 1 + relativedelta(day=1)).timetuple())
+      endDate = calendar.timegm((endDate + 1 + relativedelta(day=1, months=+1, days=-1)).timetuple()) -1
 
   #print "visit dict is : ", visitAllDict
   resp_dict = {}
