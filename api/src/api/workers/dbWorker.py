@@ -53,7 +53,7 @@ def getResponse(hostname = None, scale = None, time_from = None, time_to = None)
     endDate = calendar.timegm((time_from_datetime + relativedelta(day=1, months=+1, days=-1)).timetuple()) -1
     modulo = endDate - startDate
     visitDict = []
-    while i < 12:
+    while i < 13:
       print "startDate:: ", startDate
       print "endDate:: ", endDate
       tmpResDictAll = None
