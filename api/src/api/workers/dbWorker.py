@@ -43,13 +43,13 @@ def getResponse(hostname = None, scale = None, time_from = None, time_to = None)
       return None, False, "Error fetching response from backend"
 
   else:
-    i = 1
+    i = 0
     dbResDictAll  = []
     dbResDictHtml = []
     time_from_datetime = time_from.utcfromtimestamp(time_from)
-    while (i < 13):
-      startDate = calendar.timegm((time_from_datetime + relativedelta(months=+(i - 1))).timetuple())
-      endDate = calendar.timegm((time_from_datetime + relativedelta(months=+i)).timetuple()) - 1
+    startDate = calendar.timegm((time_from_datetime + relativedelta(day=1)).timetuple())
+    endDate = calendar.timegm((time_from_datetime + relativedelta(day=1, months=+1, days=-1)).timetuple()) - 1
+    while (i < 12):
       print "startDate:: ", startDate
       print "endDate:: ", endDate
       modulo = endDate
@@ -59,9 +59,9 @@ def getResponse(hostname = None, scale = None, time_from = None, time_to = None)
 
       dbResDictAll.append({})
       if len(tmpRespDictAll) > 0:
-        dbResDictAll[i - 1]['count'] = tmpResDictAll[0]['count']
+        dbResDictAll[i]['count'] = tmpResDictAll[0]['count']
       else:
-        dbResDictAll[i - 1]['count'] = 0
+        dbResDictAll[i]['count'] = 0
 
       if errmsg is None:
         workerLogger.error("Error fetching response from backend")
@@ -79,7 +79,8 @@ def getResponse(hostname = None, scale = None, time_from = None, time_to = None)
         dbResDictHtml[i - 1]['count'] = tmpResDictHtml[0]['count']
       else:
         dbResDictHtml[i - 1]['count'] = 0
-
+      startDate = calendar.timegm((time_from_datetime + relativedelta(day=1, months=+i)).timetuple())
+      endDate = calendar.timegm((time_from_datetime + relativedelta(day=1, months=+i, days=-1)).timetuple()) - 1
       i = i + 1   
 
   visitDict = populateDict(dbResDictAll, dbResDictHtml, time_from, time_to, modulo)
