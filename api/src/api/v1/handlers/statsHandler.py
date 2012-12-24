@@ -70,10 +70,18 @@ class StatsHandler( BaseHandler ):
           if retval is False:
             return apiHelper.badRequest(code = 107, detail = err_msg)
 
+        # get last visitors
         elif req_obj.req_type == 2:
-          return apiHelper.badRequest(code = 108, detail = "Not yet implemented!!")
+          visitors_count = req_payload.visitors_count if req_payload.visitors_count is not None else 10
+          resp_dict, retval, err_msg = dbWorker.getResponse2(hostname = hostname, visitors_count = visitors_count)
+          if retval is False:
+            return apiHelper.badRequest(code = 108, detail = err_msg)
+          resp_obj, retval, err_msg = apiHelper.constructRespObj(resp_dict = resp_dict,
+                                                             req_id = req_id)
+          if retval is False:
+            return apiHelper.badRequest(code = 109, detail = err_msg)
         else:
-          return apiHelper.badRequest(code = 109, detail = "Invalid request type!!")
+          return apiHelper.badRequest(code = 111, detail = "Invalid request type!!")
 
         resp = rc.ALL_OK
         resp['Content-Type'] = 'application/octet-stream'

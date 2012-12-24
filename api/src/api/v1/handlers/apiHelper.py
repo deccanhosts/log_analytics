@@ -157,6 +157,25 @@ def constructRespObj(resp_dict = None, req_id = None):
         #resp_struct_obj.visit_arr[i] = visit_struct_obj
         i = i + 1
       resp_struct_obj.visit_arr = visit_struct_obj  
+
+    if "last_visits_struct" in resp_dict["resp_struct"]:
+      cnt = len(resp_dict["resp_struct"]["last_visits_struct"])
+      print "last visits count is : ", cnt
+      i = 0
+      last_visit_struct_obj = []
+      while i < cnt:
+        tmp_last_visits_struct_obj = log_analytics_proto.LastVisitorsStruct()
+        last_visit_struct_obj.append(tmp_last_visits_struct_obj)
+        if "ip_addr" in resp_dict["resp_struct"]["last_visits_struct"][i]:
+          last_visits_struct_obj[i].ip_addr = resp_dict["resp_struct"]["last_visits_struct"][i]["ip_addr"]
+        if "last_hit_timestamp" in resp_dict["resp_struct"]["visit_struct"][i]:
+          last_visits_struct_obj[i].last_hit_timestamp = resp_dict["resp_struct"]["visit_struct"][i]["last_hit_timestamp"]
+        if "hit_count" in resp_dict["resp_struct"]["visit_struct"][i]:
+          last_visits_struct_obj[i].hit_count = resp_dict["resp_struct"]["visit_struct"][i]["hit_count"]
+        #resp_struct_obj.visit_arr[i] = visit_struct_obj
+        i = i + 1
+      resp_struct_obj.last_visitors_arr = last_visits_struct_obj  
+
     resp_obj.resp = resp_struct_obj
   return resp_obj, True, ""
   
