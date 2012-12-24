@@ -62,7 +62,7 @@ def getResponse(hostname = None, scale = None, time_from = None, time_to = None)
 
       dbResDictAll.append({})
       visitDict.append({})
-      if len(tmpRespDictAll) > 0:
+      if len(tmpResDictAll) > 0:
         dbResDictAll[i]['count'] = tmpResDictAll[0]['count']
       else:
         dbResDictAll[i]['count'] = 0
@@ -80,7 +80,7 @@ def getResponse(hostname = None, scale = None, time_from = None, time_to = None)
         return None, False, "Error fetching response from backend"
       
       dbResDictHtml.append({})
-      if len(tmpRespDictHtml) > 0:
+      if len(tmpResDictHtml) > 0:
         dbResDictHtml[i - 1]['count'] = tmpResDictHtml[0]['count']
       else:
         dbResDictHtml[i - 1]['count'] = 0
