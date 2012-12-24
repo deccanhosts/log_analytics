@@ -27,7 +27,7 @@ def getResponse(hostname = None, scale = None, time_from = None, time_to = None)
     workerLogger.error("Invalid scale")
     return None, False, "Invalid scale"
   
-  if scale != 6:
+  if scale != 5:
     dbResDictAll = None
     dbResDictAll, errmsg = mongoDriver.getVisitArrAll(vhost = hostname, modulo = modulo,\
                              startDate = time_from, endDate = time_to)
