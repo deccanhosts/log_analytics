@@ -5,7 +5,7 @@ PROTOFILES= log_analytics.proto
 all: clean createoutdir compile_proto clean
 # inference rule
 compile_proto: $(PROTOFILES)
-	protoc --fastpython_out 'userapi:out' --cpp_out out/ $(PROTOFILES); \
+	protoc --fastpython_out 'log_analytics_api:out' --cpp_out out/ $(PROTOFILES); \
 	cd out; \
 	python setup.py install; \
 	cd ../..
