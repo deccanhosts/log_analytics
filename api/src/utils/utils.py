@@ -34,7 +34,7 @@ def validateDomain(domain, field_name = None):
 
 
 def validateScale(scale = 2):
-  if scale < 0 or scale > 4:
+  if scale < 0 or scale > 6:
     return False, "Invalid value supplied for scale"
   return True, ""
 
