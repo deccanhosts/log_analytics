@@ -48,7 +48,7 @@ def getResponse(hostname = None, scale = None, time_from = None, time_to = None)
     i = 0
     dbResDictAll  = []
     dbResDictHtml = []
-    time_from_datetime = time_from.utcfromtimestamp(time_from)
+    time_from_datetime = datetime.utcfromtimestamp(time_from)
     startDate = calendar.timegm((time_from_datetime + relativedelta(day=1)).timetuple())
     endDate = calendar.timegm((time_from_datetime + relativedelta(day=1, months=+1, days=-1)).timetuple()) - 1
     visitDict = []
