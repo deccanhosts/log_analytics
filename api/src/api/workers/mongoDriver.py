@@ -54,6 +54,7 @@ def getVisitArrAll(vhost = None, modulo = None, startDate = None, endDate = None
     }\
   ]
   q = db.command('aggregate', config.aplogCollection, pipeline=pipeline)
+  print "pipeline is ::", pipeline, "********\n"
     
   #q = db.command('aggregate', 'aplogs', pipeline=pipeline, explain = True)
   print "result... " , q, "********\n"
