@@ -81,9 +81,9 @@ def getResponse(hostname = None, scale = None, time_from = None, time_to = None)
       
       dbResDictHtml.append({})
       if len(tmpResDictHtml) > 0:
-        dbResDictHtml[i - 1]['count'] = tmpResDictHtml[0]['count']
+        dbResDictHtml[i]['count'] = tmpResDictHtml[0]['count']
       else:
-        dbResDictHtml[i - 1]['count'] = 0
+        dbResDictHtml[i]['count'] = 0
 
       visitDict[i]['visit_time'] = startDate
       visitDict[i]['num_visits_all'] = dbResDictAll[i]['count']
