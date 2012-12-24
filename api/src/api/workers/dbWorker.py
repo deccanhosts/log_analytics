@@ -59,7 +59,7 @@ def getResponse(hostname = None, scale = None, time_from = None, time_to = None)
       tmpResDictAll = None
       modulo = endDate - startDate 
       tmpResDictAll, errmsg = mongoDriver.getVisitArrAll(vhost = hostname, modulo = modulo,\
-                             startDate = startDate, endDate = endDate)
+                             startDate = startDate, endDate = startDate)
 
       dbResDictAll.append({})
       visitDict.append({})
@@ -75,7 +75,7 @@ def getResponse(hostname = None, scale = None, time_from = None, time_to = None)
 
       tmpResDictHtml = None
       tmpResDictHtml, errmsg = mongoDriver.getVisitArrHtml(vhost = hostname, modulo = modulo,\
-                             startDate = startDate, endDate = endDate)
+                             startDate = startDate, endDate = startDate)
       if errmsg is None:
         workerLogger.error("Error fetching response from backend")
         return None, False, "Error fetching response from backend"
