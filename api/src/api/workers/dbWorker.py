@@ -57,7 +57,8 @@ def getResponse(hostname = None, scale = None, time_from = None, time_to = None)
       print "startDate:: ", startDate
       print "endDate:: ", endDate
       tmpResDictAll = None
-      modulo = endDate - startDate -1
+      modulo = endDate - startDate 
+      endDate = startDate
       tmpResDictAll, errmsg = mongoDriver.getVisitArrAll(vhost = hostname, modulo = modulo,\
                              startDate = startDate, endDate = endDate)
 
