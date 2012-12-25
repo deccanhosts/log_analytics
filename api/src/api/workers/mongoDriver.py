@@ -3,6 +3,8 @@ from pymongo import Connection
 from datetime import datetime
 from src.utils import customLogger
 from conf import config
+from bson.objectid import ObjectId
+
 import re
 workerLogger = customLogger.getWorkerLogger()
 connection = Connection()
@@ -25,7 +27,7 @@ def getUserAgent(ua_id):
   if ua_id is None:
     workerLogger.error("Invalid input parameters")
     return None, "Invalid input params"
-  for find in db[config.useragentCollection].find({'_id': ua_id}):
+  for find in db[config.useragentCollection].find({'_id': ObjectId(ua_id)}):
     user_agent = str(find["user_agent"])
     break
   return user_agent   
