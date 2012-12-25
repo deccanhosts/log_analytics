@@ -1,5 +1,7 @@
 #This file contains all the config parameters
-env             = "development"
-envList         = ["development", "production", "stage"]
-aplogCollection = "aplogs"
-vhostCollection = "vhosts"
+env                 = "development"
+envList             = ["development", "production", "stage"]
+aplogCollection     = "aplogs"
+vhostCollection     = "vhosts"
+useragentCollection = "useragents"
+

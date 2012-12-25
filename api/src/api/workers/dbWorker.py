@@ -154,6 +154,13 @@ def populateDict(dbResDictAll, dbResDictHtml, time_from, time_to, modulo):
       break
   return visitDict
    
-  
+
+def getResponse2(hostname = None, visitors_count = None):
+
+  if hostname is None or visitors_count is None:
+    workerLogger.error("Invalid input parameters")
+    return None, False, "Invalid input parameters"
+    
+      
   
   
