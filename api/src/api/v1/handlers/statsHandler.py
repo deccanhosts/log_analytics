@@ -43,11 +43,12 @@ class StatsHandler( BaseHandler ):
         except DecodeError, e:
           return apiHelper.badRequest(code = 104, detail = "Failed to decode protobuf. " + e)
 
+        hostname = req_payload.hostname
+
         if req_obj.req_type == 1:
             
           # default scale is 2 - daily
           scale = req_payload.scale if req_payload.scale is not None else 2
-          hostname = req_payload.hostname
           time_from = req_payload.time_from
          
         # default time_to is current time 
