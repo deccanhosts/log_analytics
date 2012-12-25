@@ -176,7 +176,7 @@ def constructRespObj(resp_dict = None, req_id = None):
           last_visit_struct_obj[i].hit_count = resp_dict["resp_struct"]["last_visits_struct"][i]["hit_count"]
         #resp_struct_obj.visit_arr[i] = visit_struct_obj
         i = i + 1
-      resp_struct_obj.last_visitors_arr = last_visits_struct_obj  
+      resp_struct_obj.last_visitors_arr = last_visit_struct_obj  
 
     resp_obj.resp = resp_struct_obj
   return resp_obj, True, ""
