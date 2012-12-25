@@ -164,7 +164,7 @@ def constructRespObj(resp_dict = None, req_id = None):
       i = 0
       last_visit_struct_obj = []
       while i < cnt:
-        last_visits_struct_obj = log_analytics_proto.LastVisitorsStruct()
+        tmp_last_visits_struct_obj = log_analytics_proto.LastVisitorsStruct()
         last_visit_struct_obj.append(tmp_last_visits_struct_obj)
         if "ip_addr" in resp_dict["resp_struct"]["last_visits_struct"][i]:
           last_visits_struct_obj[i].ip_addr = resp_dict["resp_struct"]["last_visits_struct"][i]["ip_addr"]
