@@ -40,7 +40,8 @@ message VisitStruct {
 message LastVisitorsStruct {
   optional string ip_addr            = 1;
   optional int64  last_hit_timestamp = 2;
-  optional int64 hit_count           = 3;
+  optional string last_hit_useragent = 3;
+  optional int64 hit_count           = 4;
 }
 
 message DebugMsg {
