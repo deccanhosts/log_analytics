@@ -198,6 +198,6 @@ def getResponse2(hostname = None, visitors_count = None):
   resp_dict = {}
   resp_dict['resp_struct'] = {}
   resp_dict['resp_struct']['visit_'] = visitors_dict
-  return final_resp_dict, True, "last_visits_struct"    
+  return resp_dict, True, "last_visits_struct"    
   
   
