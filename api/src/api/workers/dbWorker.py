@@ -161,12 +161,12 @@ def getResponse2(hostname = None, visitors_count = None):
     workerLogger.error("Invalid input parameters")
     return None, False, "Invalid input parameters"
   
-  vhost_id = getVhostId(vhost)
+  vhost_id = mongoDriver.getVhostId(vhost)
   if vhost_id is None:
     return None, False, "vhost " + hostname + " not found"
   
   visitors_dict = []
-  resp_dict, err_msg = getLastVisitorsList(vhost_id = hostname, count = visitors_count)
+  resp_dict, err_msg = mongoDriver.getLastVisitorsList(vhost_id = hostname, count = visitors_count)
   if resp_dict is None:
     return None, False, err_msg
 
@@ -179,14 +179,14 @@ def getResponse2(hostname = None, visitors_count = None):
     visitors_dict[j]['ip_addr'] =   resp_dict[i - 1]['_id']
     visitors_dict[j]['hit_count'] = resp_dict[i - 1]['count']
     ua_ts_dict = None
-    ua_ts_dict, err_msg = getLastVisitorInfo(vhost_id = vhost_id, remote_host = record_ip)
+    ua_ts_dict, err_msg = mongoDriver.getLastVisitorInfo(vhost_id = vhost_id, remote_host = record_ip)
     if ua_ts_dict is None or len(ua_ts_dict) == 0:
       workerLogger.error("Unable to get ua and ts for " + record_ip)
       visitors_dict[j]['last_hit_timestamp'] = 0 
     else:
       record_last_ts = ua_ts_dict[0]['timestamp']
       ua_id = ua_ts_dict[0]['user_agent']
-      user_agent = getUserAgent(ua_id)
+      user_agent = mongoDriver.getUserAgent(ua_id)
       if user_agent is None:
         visitors_dict[j]['last_hit_useragent'] = "NA"
       else:
