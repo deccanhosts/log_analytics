@@ -193,7 +193,7 @@ def getResponse2(hostname = None, visitors_count = None):
         visitors_dict[j]['last_hit_useragent'] = user_agent
 
     j = j + 1  
-    
+  print "dict is ::: ", visitors_dict, " ##########################\n\n"    
   return visitors_dict, True, ""    
   
   
