@@ -194,7 +194,6 @@ def getResponse2(hostname = None, visitors_count = None):
         visitors_dict[i]['last_hit_useragent'] = user_agent
     i = i + 1  
 
-  print "dict is ::: ", visitors_dict, " ##########################\n\n"    
   resp_dict = {}
   resp_dict['resp_struct'] = {}
   resp_dict['resp_struct']['last_visits_struct'] = visitors_dict

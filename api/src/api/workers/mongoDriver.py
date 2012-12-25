@@ -136,8 +136,8 @@ def getLastVisitorsList(vhost_id = None, count = None):
   ]
 
   q = db.command('aggregate', config.aplogCollection, pipeline=pipeline)
-  print "pipeline is ::::", pipeline, "\n^^^^^^^^^^^^^^^\n"
-  print "result is ::::", q, "\n^^^^^^^^^^^^^^^\n"
+  #print "pipeline is ::::", pipeline, "\n^^^^^^^^^^^^^^^\n"
+  #print "result is ::::", q, "\n^^^^^^^^^^^^^^^\n"
   
   return q["result"], ""
 
@@ -161,7 +161,7 @@ def getLastVisitorInfo(vhost_id = None, remote_host = None):
   ]
 
   q = db.command('aggregate', config.aplogCollection, pipeline=pipeline)
-  print "pipeline is ::::", pipeline, "\n^^^^^^^^^^^^^^^\n"
-  print "result is ::::", q, "\n^^^^^^^^^^^^^^^\n"
+  #print "pipeline is ::::", pipeline, "\n^^^^^^^^^^^^^^^\n"
+  #print "result is ::::", q, "\n^^^^^^^^^^^^^^^\n"
   return q["result"], ""
 
