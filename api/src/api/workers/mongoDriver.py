@@ -114,7 +114,7 @@ def getVisitArrHtml(vhost = None, modulo = None, startDate = None, endDate = Non
   #q = db.command('aggregate', 'aplogs', pipeline=pipeline, explain = True)
   return q["result"], ""
 
-def getLastVisitorsList(vhost_id = None, count = None)
+def getLastVisitorsList(vhost_id = None, count = None):
 
   if vhost_id is None or count is None:
     workerLogger.error("Invalid input parameters")
@@ -137,7 +137,7 @@ def getLastVisitorsList(vhost_id = None, count = None)
   return q["result"], ""
 
 
-def getLastVisitorInfo(vhost_id = None, remote_host = None)
+def getLastVisitorInfo(vhost_id = None, remote_host = None):
 
   if vhost_id is None or remote_host is None:
     workerLogger.error("Invalid input parameters")
