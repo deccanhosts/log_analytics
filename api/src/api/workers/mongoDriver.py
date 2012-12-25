@@ -151,7 +151,7 @@ def getLastVisitorInfo(vhost_id = None, remote_host = None):
       ]} 
     },
     {'$sort': {'timestamp': -1}},\
-    {'$limit': 1}
+    {'$limit': 1},\
     {'$project': {'user_agent': 1, 'timestamp': 1}}
   ]
 
