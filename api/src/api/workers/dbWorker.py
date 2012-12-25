@@ -185,7 +185,7 @@ def getResponse2(hostname = None, visitors_count = None):
       workerLogger.error("Unable to get ua and ts for " + record_ip)
       visitors_dict[i]['last_hit_timestamp'] = 0 
     else:
-      visitors_dict[i]['last_hit_timestamp'] = ua_ts_dict[0]['timestamp']
+      visitors_dict[i]['last_hit_timestamp'] = int(ua_ts_dict[0]['timestamp'])
       ua_id = ua_ts_dict[0]['user_agent']
       user_agent = mongoDriver.getUserAgent(ua_id)
       if user_agent is None:
