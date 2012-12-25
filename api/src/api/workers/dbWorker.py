@@ -175,14 +175,13 @@ def getResponse2(hostname = None, visitors_count = None):
     return None, False, "empty response for get last visitors"
   i = 0
   j = 0
-  while (i <= list_count):
-    i = i + 1  
+  while (i < list_count):
     visitors_dict.append({})
-    visitors_dict[j]['ip_addr'] =   resp_dict[i - 1]['_id']
-    visitors_dict[j]['hit_count'] = resp_dict[i - 1]['count']
+    visitors_dict[i]['ip_addr'] =   resp_dict[i]['_id']
+    visitors_dict[i]['hit_count'] = resp_dict[i]['count']
     ua_ts_dict = None
     ua_ts_dict, err_msg = mongoDriver.getLastVisitorInfo(vhost_id = vhost_id, \
-                                                         remote_host = visitors_dict[j]['ip_addr'])
+                                                         remote_host = visitors_dict[i]['ip_addr'])
     if ua_ts_dict is None or len(ua_ts_dict) == 0:
       workerLogger.error("Unable to get ua and ts for " + record_ip)
       visitors_dict[j]['last_hit_timestamp'] = 0 
@@ -191,11 +190,11 @@ def getResponse2(hostname = None, visitors_count = None):
       ua_id = ua_ts_dict[0]['user_agent']
       user_agent = mongoDriver.getUserAgent(ua_id)
       if user_agent is None:
-        visitors_dict[j]['last_hit_useragent'] = "NA"
+        visitors_dict[i]['last_hit_useragent'] = "NA"
       else:
-        visitors_dict[j]['last_hit_useragent'] = user_agent
+        visitors_dict[i]['last_hit_useragent'] = user_agent
+    i = i + 1  
 
-    j = j + 1  
   print "dict is ::: ", visitors_dict, " ##########################\n\n"    
   return visitors_dict, True, ""    
   
