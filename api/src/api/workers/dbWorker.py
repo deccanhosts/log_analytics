@@ -197,7 +197,7 @@ def getResponse2(hostname = None, visitors_count = None):
   print "dict is ::: ", visitors_dict, " ##########################\n\n"    
   resp_dict = {}
   resp_dict['resp_struct'] = {}
-  resp_dict['resp_struct']['visit_'] = visitors_dict
-  return resp_dict, True, "last_visits_struct"    
+  resp_dict['resp_struct']['last_visits_struct'] = visitors_dict
+  return resp_dict, True, ""    
   
   
