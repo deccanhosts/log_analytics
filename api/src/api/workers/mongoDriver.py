@@ -21,6 +21,7 @@ def getVhostId(vhost):
 def getUserAgent(ua_id):
 
   user_agent = ""
+  print "ua_id :::", ua_id
   if ua_id is None:
     workerLogger.error("Invalid input parameters")
     return None, "Invalid input params"
