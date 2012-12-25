@@ -171,6 +171,8 @@ def getResponse2(hostname = None, visitors_count = None):
     return None, False, err_msg
 
   list_count = len(resp_dict)
+  if list_count == 0:
+    return None, False, "empty response for get last visitors"
   i = 0
   j = 0
   while (i <= list_count):
