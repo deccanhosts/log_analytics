@@ -37,15 +37,15 @@ class StatsHandler( BaseHandler ):
         tcObj = apiHelper.init(reqId = req_obj.req_id)
         req_id = req_obj.req_id
   
+        req_payload = log_analytics_proto.ReqPayloadStruct()
+        try:
+          req_payload = req_obj.req_payload
+        except DecodeError, e:
+          return apiHelper.badRequest(code = 104, detail = "Failed to decode protobuf. " + e)
+
         if req_obj.req_type == 1:
-        
-          # default scale is 2 - daily
-          req_payload = log_analytics_proto.ReqPayloadStruct()
-          try:
-            req_payload = req_obj.req_payload
-          except DecodeError, e:
-            return apiHelper.badRequest(code = 104, detail = "Failed to decode protobuf. " + e)
             
+          # default scale is 2 - daily
           scale = req_payload.scale if req_payload.scale is not None else 2
           hostname = req_payload.hostname
           time_from = req_payload.time_from
