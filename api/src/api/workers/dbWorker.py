@@ -161,7 +161,7 @@ def getResponse2(hostname = None, visitors_count = None):
     workerLogger.error("Invalid input parameters")
     return None, False, "Invalid input parameters"
   
-  vhost_id = mongoDriver.getVhostId(vhost)
+  vhost_id = mongoDriver.getVhostId(hostname)
   if vhost_id is None:
     return None, False, "vhost " + hostname + " not found"
   
