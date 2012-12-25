@@ -166,7 +166,7 @@ def getResponse2(hostname = None, visitors_count = None):
     return None, False, "vhost " + hostname + " not found"
   
   visitors_dict = []
-  resp_dict, err_msg = mongoDriver.getLastVisitorsList(vhost_id = hostname, count = visitors_count)
+  resp_dict, err_msg = mongoDriver.getLastVisitorsList(vhost_id = vhost_id, count = visitors_count)
   if resp_dict is None:
     return None, False, err_msg
 
