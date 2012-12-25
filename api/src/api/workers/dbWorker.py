@@ -181,7 +181,8 @@ def getResponse2(hostname = None, visitors_count = None):
     visitors_dict[j]['ip_addr'] =   resp_dict[i - 1]['_id']
     visitors_dict[j]['hit_count'] = resp_dict[i - 1]['count']
     ua_ts_dict = None
-    ua_ts_dict, err_msg = mongoDriver.getLastVisitorInfo(vhost_id = vhost_id, remote_host = record_ip)
+    ua_ts_dict, err_msg = mongoDriver.getLastVisitorInfo(vhost_id = vhost_id, \
+                                                         remote_host = visitors_dict[j]['ip_addr'])
     if ua_ts_dict is None or len(ua_ts_dict) == 0:
       workerLogger.error("Unable to get ua and ts for " + record_ip)
       visitors_dict[j]['last_hit_timestamp'] = 0 
