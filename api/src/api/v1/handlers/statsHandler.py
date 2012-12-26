@@ -84,6 +84,20 @@ class StatsHandler( BaseHandler ):
         else:
           return apiHelper.badRequest(code = 111, detail = "Invalid request type!!")
 
+        # get last visitors - raw
+        elif req_obj.req_type == 3:
+          visitors_count = req_payload.visitors_count if req_payload.visitors_count is not None else 50
+          resp_dict, retval, err_msg = dbWorker.getResponse3(hostname = hostname, visitors_count = visitors_count)
+          if retval is False:
+            return apiHelper.badRequest(code = 112, detail = err_msg)
+          resp_obj, retval, err_msg = apiHelper.constructRespObj(resp_dict = resp_dict,
+                                                             req_id = req_id)
+          if retval is False:
+            return apiHelper.badRequest(code = 113, detail = err_msg)
+        else:
+          return apiHelper.badRequest(code = 114, detail = "Invalid request type!!")
+
+
         resp = rc.ALL_OK
         resp['Content-Type'] = 'application/octet-stream'
         resp.content = resp_obj.SerializeToString()

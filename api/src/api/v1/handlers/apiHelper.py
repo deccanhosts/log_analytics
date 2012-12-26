@@ -174,9 +174,31 @@ def constructRespObj(resp_dict = None, req_id = None):
           last_visit_struct_obj[i].last_hit_useragent = resp_dict["resp_struct"]["last_visits_struct"][i]["last_hit_useragent"]
         if "hit_count" in resp_dict["resp_struct"]["last_visits_struct"][i]:
           last_visit_struct_obj[i].hit_count = resp_dict["resp_struct"]["last_visits_struct"][i]["hit_count"]
-        #resp_struct_obj.visit_arr[i] = visit_struct_obj
         i = i + 1
       resp_struct_obj.last_visitors_arr = last_visit_struct_obj  
+
+   if "last_visits_raw_struct" in resp_dict["resp_struct"]:
+      cnt = len(resp_dict["resp_struct"]["last_visits_raw_struct"])
+      print "last visits raw count is : ", cnt
+      i = 0
+      last_visit_raw_struct_obj = []
+      while i < cnt:
+        tmp_last_visits_raw_struct_obj = log_analytics_proto.LastVisitorsRawStruct()
+        last_visit_raw_struct_obj.append(tmp_last_visits_raw_struct_obj)
+        if "ip_addr" in resp_dict["resp_struct"]["last_visits_raw_struct"][i]:
+          last_visit_raw_struct_obj[i].ip_addr = resp_dict["resp_struct"]["last_visits_raw_struct"][i]["ip_addr"]
+        if "timestamp" in resp_dict["resp_struct"]["last_visits_raw_struct"][i]:
+          last_visit_raw_struct_obj[i].timestamp = resp_dict["resp_struct"]["last_visits_raw_struct"][i]["timestamp"]
+        if "req_str" in resp_dict["resp_struct"]["last_visits_raw_struct"][i]:
+          last_visit_raw_struct_obj[i].req_str = resp_dict["resp_struct"]["last_visits_raw_struct"][i]["req_str"]
+        if "useragent" in resp_dict["resp_struct"]["last_visits_raw_struct"][i]:
+          last_visit_raw_struct_obj[i].useragent = resp_dict["resp_struct"]["last_visits_raw_struct"][i]["useragent"]
+        if "referrer" in resp_dict["resp_struct"]["last_visits_raw_struct"][i]:
+          last_visit_raw_struct_obj[i].referrer = resp_dict["resp_struct"]["last_visits_raw_struct"][i]["referrer"]
+        i = i + 1
+      resp_struct_obj.last_visitors_arr = last_visit_struct_obj  
+
+
 
     resp_obj.resp = resp_struct_obj
   return resp_obj, True, ""

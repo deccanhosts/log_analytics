@@ -11,7 +11,7 @@ message ReqPayloadStruct {
                                      // only applicable for req_type = 1  
   optional int64 time_from      = 3; // only applicable for req_type = 1
   optional int64 time_to        = 4; // only applicable for req_type = 1
-  optional int64 visitors_count = 5; // only applicable for req_type = 2. 
+  optional int64 visitors_count = 5; // only applicable for req_type = 2 and req_type = 3. 
                                      // It denotes max no. of unique visitors that are to be queried going back in time.
 }
 
