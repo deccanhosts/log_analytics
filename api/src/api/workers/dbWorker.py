@@ -194,6 +194,7 @@ def getResponse2(hostname = None, visitors_count = None):
         visitors_dict[i]['last_hit_useragent'] = user_agent
     i = i + 1  
 
+  visitors_dict = sorted(visitors_dict, key = lambda k:k['last_hit_timestamp'])
   resp_dict = {}
   resp_dict['resp_struct'] = {}
   resp_dict['resp_struct']['last_visits_struct'] = visitors_dict
