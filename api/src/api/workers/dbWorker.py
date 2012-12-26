@@ -199,4 +199,41 @@ def getResponse2(hostname = None, visitors_count = None):
   resp_dict['resp_struct']['last_visits_struct'] = visitors_dict
   return resp_dict, True, ""    
   
+def getResponse3(hostname = None, visitors_count = None):
+
+  if hostname is None or visitors_count is None:
+    workerLogger.error("Invalid input parameters")
+    return None, False, "Invalid input parameters"
   
+  vhost_id = mongoDriver.getVhostId(hostname)
+  if vhost_id is None:
+    return None, False, "vhost " + hostname + " not found"
+  
+  visitors_dict = []
+  resp_dict, err_msg = mongoDriver.getLastVisitorsRawList(vhost_id = vhost_id, count = visitors_count)
+  if resp_dict is None:
+    return None, False, err_msg
+
+  list_count = len(resp_dict)
+  if list_count == 0:
+    return None, False, "empty response for get last visitors"
+  i = 0
+  while (i < list_count):
+    visitors_dict.append({})
+    visitors_dict[i]['ip_addr']   = resp_dict[i]['remote_host']
+    visitors_dict[i]['referrer']  = resp_dict[i]['referrer']
+    visitors_dict[i]['req_str']   = resp_dict[i]['req_str']
+    visitors_dict[i]['timestamp'] = resp_dict[i]['timestamp']
+    ua_id = resp_dict[i]['user_agent']
+      user_agent = mongoDriver.getUserAgent(ua_id)
+      if user_agent is None:
+        visitors_dict[i]['useragent'] = "NA"
+      else:
+        visitors_dict[i]['useragent'] = user_agent
+    i = i + 1  
+
+  resp_dict = {}
+  resp_dict['resp_struct'] = {}
+  resp_dict['resp_struct']['last_visits_raw_struct'] = visitors_dict
+  return resp_dict, True, ""    
+

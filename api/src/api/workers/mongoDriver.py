@@ -165,3 +165,35 @@ def getLastVisitorInfo(vhost_id = None, remote_host = None):
   #print "result is ::::", q, "\n^^^^^^^^^^^^^^^\n"
   return q["result"], ""
 
+def getLastVisitorsRawList(vhost_id = None, count = None):
+
+  if vhost_id is None or count is None:
+    workerLogger.error("Invalid input parameters")
+    return None, "Invalid input params"
+
+  pipeline = [
+    {'$match':
+      { '$and':[
+        {'vhost': vhost_id},
+        {'resp_code': {'$not': 404}}
+      ]} 
+    },
+    {'$sort': {'timestamp': -1}},\
+    {'$project': 
+      {'remote_host': 1, \
+       'timestamp'  : 1, \
+       'req_str'    : 1, \
+       'referrer'   : 1, \
+       'user_agent' : 1 \
+      }
+    },
+    {'$limit': count}
+  ]
+
+  q = db.command('aggregate', config.aplogCollection, pipeline=pipeline)
+  #print "pipeline is ::::", pipeline, "\n^^^^^^^^^^^^^^^\n"
+  #print "result is ::::", q, "\n^^^^^^^^^^^^^^^\n"
+  
+  return q["result"], ""
+
+
