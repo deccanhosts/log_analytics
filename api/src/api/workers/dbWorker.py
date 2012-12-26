@@ -225,11 +225,11 @@ def getResponse3(hostname = None, visitors_count = None):
     visitors_dict[i]['req_str']   = resp_dict[i]['req_str']
     visitors_dict[i]['timestamp'] = resp_dict[i]['timestamp']
     ua_id = resp_dict[i]['user_agent']
-      user_agent = mongoDriver.getUserAgent(ua_id)
-      if user_agent is None:
-        visitors_dict[i]['useragent'] = "NA"
-      else:
-        visitors_dict[i]['useragent'] = user_agent
+    user_agent = mongoDriver.getUserAgent(ua_id)
+    if user_agent is None:
+      visitors_dict[i]['useragent'] = "NA"
+    else:
+      visitors_dict[i]['useragent'] = user_agent
     i = i + 1  
 
   resp_dict = {}
