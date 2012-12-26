@@ -175,7 +175,7 @@ def getLastVisitorsRawList(vhost_id = None, count = None):
     {'$match':
       { '$and':[
         {'vhost': vhost_id},
-        {'resp_code': {'$not': 404}}
+        {'resp_code': {'$ne': 404}}
       ]} 
     },
     {'$sort': {'timestamp': -1}},\
