@@ -2,7 +2,7 @@ package log_analytics_proto;
 
 message ReqMsg {
   optional string req_id                  = 1; 
-  optional int32  req_type                = 2; // ENUM(all_visitors_stats = 1, latest_visitors_stats = 2)
+  optional int32  req_type                = 2; // ENUM(all_visitors_stats = 1, latest_visitors_stats = 2, latest_visitors_raw_stats = 3)
   optional ReqPayloadStruct req_payload = 3;        
 }
 message ReqPayloadStruct {
@@ -22,13 +22,14 @@ message RespMsg {
 }
 
 message RespStruct {
-  optional int64 page_views                              = 1; // only applicable for req_type = 1
-  optional int64 total_visits                            = 2; // only applicable for req_type = 1
-  optional int64 unique_visits                           = 3; // only applicable for req_type = 1
-  optional double pages_per_visit                        = 4; // only applicable for req_type = 1
-  optional int64 avg_visit_duration                      = 5; // only applicable for req_type = 1
-  repeated VisitStruct visit_arr                        = 6; // only applicable for req_type = 1
-  repeated LastVisitorsStruct last_visitors_arr        = 7; // only applicable for req_type = 2            
+  optional int64 page_views                                  = 1; // only applicable for req_type = 1
+  optional int64 total_visits                                = 2; // only applicable for req_type = 1
+  optional int64 unique_visits                               = 3; // only applicable for req_type = 1
+  optional double pages_per_visit                            = 4; // only applicable for req_type = 1
+  optional int64 avg_visit_duration                          = 5; // only applicable for req_type = 1
+  repeated VisitStruct visit_arr                             = 6; // only applicable for req_type = 1
+  repeated LastVisitorsStruct last_visitors_arr              = 7; // only applicable for req_type = 2            
+  repeated LastVisitorsRawStruct last_visitors_raw_arr        = 8; // only applicable for req_type = 3            
 }
 
 message VisitStruct {
@@ -42,6 +43,14 @@ message LastVisitorsStruct {
   optional int64  last_hit_timestamp = 2;
   optional string last_hit_useragent = 3;
   optional int64 hit_count           = 4;
+}
+
+message LastVisitorsRawStruct {
+  optional string ip_addr            = 1;
+  optional int64  timestamp          = 2;
+  optional string req_str            = 3;
+  optional string useragent          = 4;
+  optional string referrer           = 5;
 }
 
 message DebugMsg {
