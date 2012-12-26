@@ -196,7 +196,7 @@ def constructRespObj(resp_dict = None, req_id = None):
         if "referrer" in resp_dict["resp_struct"]["last_visits_raw_struct"][i]:
           last_visit_raw_struct_obj[i].referrer = resp_dict["resp_struct"]["last_visits_raw_struct"][i]["referrer"]
         i = i + 1
-      resp_struct_obj.last_visitors_raw_arr = last_visit_struct_obj  
+      resp_struct_obj.last_visitors_raw_arr = last_visit_raw_struct_obj  
 
 
     resp_obj.resp = resp_struct_obj
