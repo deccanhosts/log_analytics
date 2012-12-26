@@ -235,5 +235,6 @@ def getResponse3(hostname = None, visitors_count = None):
   resp_dict = {}
   resp_dict['resp_struct'] = {}
   resp_dict['resp_struct']['last_visits_raw_struct'] = visitors_dict
+  print "resp dict:::", resp_dict
   return resp_dict, True, ""    
 

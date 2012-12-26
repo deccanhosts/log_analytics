@@ -81,8 +81,6 @@ class StatsHandler( BaseHandler ):
                                                              req_id = req_id)
           if retval is False:
             return apiHelper.badRequest(code = 109, detail = err_msg)
-        else:
-          return apiHelper.badRequest(code = 111, detail = "Invalid request type!!")
 
         # get last visitors - raw
         elif req_obj.req_type == 3:
