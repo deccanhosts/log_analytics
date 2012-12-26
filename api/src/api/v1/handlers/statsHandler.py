@@ -74,6 +74,8 @@ class StatsHandler( BaseHandler ):
         # get last visitors
         elif req_obj.req_type == 2:
           visitors_count = req_payload.visitors_count if req_payload.visitors_count is not None else 10
+          if visitors_count > 500:
+            return apiHelper.badRequest(code = 121, detail = "visitor count too large!")
           resp_dict, retval, err_msg = dbWorker.getResponse2(hostname = hostname, visitors_count = visitors_count)
           if retval is False:
             return apiHelper.badRequest(code = 108, detail = err_msg)
@@ -85,6 +87,8 @@ class StatsHandler( BaseHandler ):
         # get last visitors - raw
         elif req_obj.req_type == 3:
           visitors_count = req_payload.visitors_count if req_payload.visitors_count is not None else 50
+          if visitors_count > 500:
+            return apiHelper.badRequest(code = 121, detail = "visitor count too large!")
           resp_dict, retval, err_msg = dbWorker.getResponse3(hostname = hostname, visitors_count = visitors_count)
           if retval is False:
             return apiHelper.badRequest(code = 112, detail = err_msg)
