@@ -177,7 +177,7 @@ def constructRespObj(resp_dict = None, req_id = None):
         i = i + 1
       resp_struct_obj.last_visitors_arr = last_visit_struct_obj  
 
-   if "last_visits_raw_struct" in resp_dict["resp_struct"]:
+    if "last_visits_raw_struct" in resp_dict["resp_struct"]:
       cnt = len(resp_dict["resp_struct"]["last_visits_raw_struct"])
       print "last visits raw count is : ", cnt
       i = 0
