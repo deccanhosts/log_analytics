@@ -223,7 +223,7 @@ def getResponse3(hostname = None, visitors_count = None):
     visitors_dict[i]['ip_addr']   = resp_dict[i]['remote_host']
     visitors_dict[i]['referrer']  = resp_dict[i]['referrer']
     visitors_dict[i]['req_str']   = resp_dict[i]['req_str']
-    visitors_dict[i]['timestamp'] = resp_dict[i]['timestamp']
+    visitors_dict[i]['timestamp'] = int(resp_dict[i]['timestamp'])
     ua_id = resp_dict[i]['user_agent']
     user_agent = mongoDriver.getUserAgent(ua_id)
     if user_agent is None:
