@@ -11,6 +11,7 @@ def getResponse(hostname = None, scale = None, time_from = None, time_to = None)
     workerLogger.error("Invalid input parameters")
     return None, False, "Invalid input parameters"
  
+  workerLogger.debug("getResponse:: hostname: " + hostname + ", scale: " + str(scale))
   if scale == 1:
     modulo = 60
   elif scale == 2:
@@ -102,6 +103,7 @@ def getResponse(hostname = None, scale = None, time_from = None, time_to = None)
   print "resp dict:: ", resp_dict
   cnt = len(resp_dict["resp_struct"]["visit_struct"])
   print "count is : ", cnt, "***********\n"
+  workerLogger.debug("Respose str:: " + str(resp_dict))
   return resp_dict, True, ""
 
 
@@ -161,6 +163,7 @@ def getResponse2(hostname = None, visitors_count = None):
     workerLogger.error("Invalid input parameters")
     return None, False, "Invalid input parameters"
   
+  workerLogger.debug("getResponse2:: vhost: " + str(hostname) + " visitors_count: " + str(visitors_count))
   vhost_id = mongoDriver.getVhostId(hostname)
   if vhost_id is None:
     return None, False, "vhost " + hostname + " not found"
@@ -198,6 +201,7 @@ def getResponse2(hostname = None, visitors_count = None):
   resp_dict = {}
   resp_dict['resp_struct'] = {}
   resp_dict['resp_struct']['last_visits_struct'] = visitors_dict
+  workerLogger.debug("response is :: " + str(resp_dict))
   return resp_dict, True, ""    
   
 def getResponse3(hostname = None, visitors_count = None):
@@ -206,6 +210,7 @@ def getResponse3(hostname = None, visitors_count = None):
     workerLogger.error("Invalid input parameters")
     return None, False, "Invalid input parameters"
   
+  workerLogger.debug("getResponse3:: vhost: " + str(hostname) + " visitors_count: " + str(visitors_count))
   vhost_id = mongoDriver.getVhostId(hostname)
   if vhost_id is None:
     return None, False, "vhost " + hostname + " not found"
@@ -236,5 +241,6 @@ def getResponse3(hostname = None, visitors_count = None):
   resp_dict = {}
   resp_dict['resp_struct'] = {}
   resp_dict['resp_struct']['last_visits_raw_struct'] = visitors_dict
+  workerLogger.debug("response is :: " + str(resp_dict))
   return resp_dict, True, ""    
 
