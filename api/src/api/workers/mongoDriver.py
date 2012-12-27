@@ -137,6 +137,7 @@ def getLastVisitorsList(vhost_id = None, count = None):
 
   q = db.command('aggregate', config.aplogCollection, pipeline=pipeline)
   #print "pipeline is ::::", pipeline, "\n^^^^^^^^^^^^^^^\n"
+  workerLogger.debug("mongoDriver resp::" + str(q))
   #print "result is ::::", q, "\n^^^^^^^^^^^^^^^\n"
   
   return q["result"], ""
@@ -163,6 +164,7 @@ def getLastVisitorInfo(vhost_id = None, remote_host = None):
   q = db.command('aggregate', config.aplogCollection, pipeline=pipeline)
   #print "pipeline is ::::", pipeline, "\n^^^^^^^^^^^^^^^\n"
   #print "result is ::::", q, "\n^^^^^^^^^^^^^^^\n"
+  workerLogger.debug("mongoDriver resp::" + str(q))
   return q["result"], ""
 
 def getLastVisitorsRawList(vhost_id = None, count = None):
@@ -191,6 +193,7 @@ def getLastVisitorsRawList(vhost_id = None, count = None):
   ]
 
   q = db.command('aggregate', config.aplogCollection, pipeline=pipeline)
+  workerLogger.debug("mongoDriver resp::" + str(q))
   #print "pipeline is ::::", pipeline, "\n^^^^^^^^^^^^^^^\n"
   #print "result is ::::", q, "\n^^^^^^^^^^^^^^^\n"
   
