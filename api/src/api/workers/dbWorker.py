@@ -182,7 +182,7 @@ def getResponse2(hostname = None, visitors_count = None):
     visitors_dict.append({})
     visitors_dict[i]['ip_addr'] =   resp_dict[i]['remote_host']
     visitors_dict[i]['hit_count'] = resp_dict[i]['count']
-    visitors_dict[i]['last_hit_timestamp'] = resp_dict[i]['timestamp']
+    visitors_dict[i]['last_hit_timestamp'] = int(resp_dict[i]['timestamp'])
     ua_id = resp_dict[i]['user_agent']
     user_agent = mongoDriver.getUserAgent(ua_id)
     if user_agent is None:
