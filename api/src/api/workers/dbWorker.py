@@ -100,10 +100,10 @@ def getResponse(hostname = None, scale = None, time_from = None, time_to = None)
   resp_dict = {}
   resp_dict['resp_struct'] = {}
   resp_dict['resp_struct']['visit_struct'] = visitDict
-  print "resp dict:: ", resp_dict
+  #print "resp dict:: ", resp_dict
   cnt = len(resp_dict["resp_struct"]["visit_struct"])
-  print "count is : ", cnt, "***********\n"
-  workerLogger.debug("Respose str:: " + str(resp_dict))
+  #print "count is : ", cnt, "***********\n"
+  #workerLogger.debug("Respose str:: " + str(resp_dict))
   return resp_dict, True, ""
 
 
@@ -119,7 +119,6 @@ def populateDict(dbResDictAll, dbResDictHtml, time_from, time_to, modulo):
     i = i + 1
     if i == tmp_count:
       break
-  print "tmp dict:: ", tmp_dict
 
   i = 0
   tmp_dict2 = {}
@@ -131,7 +130,6 @@ def populateDict(dbResDictAll, dbResDictHtml, time_from, time_to, modulo):
     i = i + 1
     if i == tmp_count2:
       break
-  print "tmp dict html:: ", tmp_dict2
  
 
   i = 0
@@ -190,27 +188,11 @@ def getResponse2(hostname = None, visitors_count = None):
     else:
       visitors_dict[i]['last_hit_useragent'] = user_agent
     i = i + 1  
-    '''ua_ts_dict = None
-    ua_ts_dict, err_msg = mongoDriver.getLastVisitorInfo(vhost_id = vhost_id, \
-                                                         remote_host = visitors_dict[i]['ip_addr'])
-    if ua_ts_dict is None or len(ua_ts_dict) == 0:
-      workerLogger.error("Unable to get ua and ts for " + record_ip)
-      visitors_dict[i]['last_hit_timestamp'] = 0 
-    else:
-      visitors_dict[i]['last_hit_timestamp'] = int(ua_ts_dict[0]['timestamp'])
-      ua_id = ua_ts_dict[0]['user_agent']
-      user_agent = mongoDriver.getUserAgent(ua_id)
-      if user_agent is None:
-        visitors_dict[i]['last_hit_useragent'] = "NA"
-      else:
-        visitors_dict[i]['last_hit_useragent'] = user_agent'''
 
-  #visitors_dict = sorted(visitors_dict, key = lambda k:k['last_hit_timestamp'], reverse = True)
   resp_dict = {}
   resp_dict['resp_struct'] = {}
   resp_dict['resp_struct']['last_visits_struct'] = visitors_dict
-  print "&^&^&^&^&^&^& >>>>>>>>> ", resp_dict
-  workerLogger.debug("response is :: " + str(resp_dict))
+  #workerLogger.debug("response is :: " + str(resp_dict))
   return resp_dict, True, ""    
   
 def getResponse3(hostname = None, visitors_count = None):
@@ -250,6 +232,6 @@ def getResponse3(hostname = None, visitors_count = None):
   resp_dict = {}
   resp_dict['resp_struct'] = {}
   resp_dict['resp_struct']['last_visits_raw_struct'] = visitors_dict
-  workerLogger.debug("response is :: " + str(resp_dict))
+  #workerLogger.debug("response is :: " + str(resp_dict))
   return resp_dict, True, ""    
 

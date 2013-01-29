@@ -23,7 +23,7 @@ def getVhostId(vhost):
 def getUserAgent(ua_id):
 
   user_agent = ""
-  print "ua_id :::", ua_id
+  #print "ua_id :::", ua_id
   if ua_id is None:
     workerLogger.error("Invalid input parameters")
     return None, "Invalid input params"
@@ -123,17 +123,6 @@ def getLastVisitorsList(vhost_id = None, count = None):
     workerLogger.error("Invalid input parameters")
     return None, "Invalid input params"
 
-  '''pipeline = [
-    {'$match': {'vhost': vhost_id}},
-    {'$sort': {'timestamp': -1}},\
-    {'$project': {'remote_host': 1}},
-    {'$group': 
-      {'_id':"$remote_host",\
-       'count': {"$sum": 1}\
-      }\
-    },\
-    {'$limit': count}
-  ]'''
   pipeline = [
     {'$match': {'vhost': vhost_id}},
     {'$project': {'_id':0, 'remote_host': 1, 'maxVal': {'val': "$timestamp"}, 'lastUa': {'ua': "$user_agent"}}},
@@ -155,7 +144,7 @@ def getLastVisitorsList(vhost_id = None, count = None):
 
   q = db.command('aggregate', config.aplogCollection, pipeline=pipeline)
   #print "pipeline is ::::", pipeline, "\n^^^^^^^^^^^^^^^\n"
-  workerLogger.debug("mongoDriver resp::" + str(q))
+  #workerLogger.debug("mongoDriver resp::" + str(q))
   #print "result is ::::", q, "\n^^^^^^^^^^^^^^^\n"
   
   return q["result"], ""
@@ -182,7 +171,7 @@ def getLastVisitorInfo(vhost_id = None, remote_host = None):
   q = db.command('aggregate', config.aplogCollection, pipeline=pipeline)
   #print "pipeline is ::::", pipeline, "\n^^^^^^^^^^^^^^^\n"
   #print "result is ::::", q, "\n^^^^^^^^^^^^^^^\n"
-  workerLogger.debug("mongoDriver resp::" + str(q))
+  #workerLogger.debug("mongoDriver resp::" + str(q))
   return q["result"], ""
 
 def getLastVisitorsRawList(vhost_id = None, count = None):
@@ -211,7 +200,7 @@ def getLastVisitorsRawList(vhost_id = None, count = None):
   ]
 
   q = db.command('aggregate', config.aplogCollection, pipeline=pipeline)
-  workerLogger.debug("mongoDriver resp::" + str(q))
+  #workerLogger.debug("mongoDriver resp::" + str(q))
   #print "pipeline is ::::", pipeline, "\n^^^^^^^^^^^^^^^\n"
   #print "result is ::::", q, "\n^^^^^^^^^^^^^^^\n"
   
