@@ -136,7 +136,7 @@ def getLastVisitorsList(vhost_id = None, count = None):
   ]'''
   pipeline = [
     {'$match': {'vhost': vhost_id}},
-    {'$project': {'_id':0, 'remote_host': 1, 'maxVal': {'val': "$timestamp"}, 'firstUa': {'ua': "$user_agent"}}},
+    {'$project': {'_id':0, 'remote_host': 1, 'maxVal': {'val': "$timestamp"}, 'lastUa': {'ua': "$user_agent"}}},
     {'$group':
       {'_id':{"remote_host": "$remote_host"},\
        'count': {"$sum": 1},\
