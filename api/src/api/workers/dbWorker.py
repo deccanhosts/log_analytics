@@ -182,7 +182,14 @@ def getResponse2(hostname = None, visitors_count = None):
     visitors_dict.append({})
     visitors_dict[i]['ip_addr'] =   resp_dict[i]['_id']
     visitors_dict[i]['hit_count'] = resp_dict[i]['count']
-    ua_ts_dict = None
+    visitors_dict[i]['last_hit_timestamp'] = resp_dict[i]['timestamp']
+    ua_id = resp_dict[i]['user_agent']
+    user_agent = mongoDriver.getUserAgent(ua_id)
+    if user_agent is None:
+      visitors_dict[i]['last_hit_useragent'] = "NA"
+    else:
+      visitors_dict[i]['last_hit_useragent'] = user_agent
+    '''ua_ts_dict = None
     ua_ts_dict, err_msg = mongoDriver.getLastVisitorInfo(vhost_id = vhost_id, \
                                                          remote_host = visitors_dict[i]['ip_addr'])
     if ua_ts_dict is None or len(ua_ts_dict) == 0:
@@ -195,7 +202,7 @@ def getResponse2(hostname = None, visitors_count = None):
       if user_agent is None:
         visitors_dict[i]['last_hit_useragent'] = "NA"
       else:
-        visitors_dict[i]['last_hit_useragent'] = user_agent
+        visitors_dict[i]['last_hit_useragent'] = user_agent'''
     i = i + 1  
 
   visitors_dict = sorted(visitors_dict, key = lambda k:k['last_hit_timestamp'], reverse = True)

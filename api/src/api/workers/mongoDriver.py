@@ -123,7 +123,7 @@ def getLastVisitorsList(vhost_id = None, count = None):
     workerLogger.error("Invalid input parameters")
     return None, "Invalid input params"
 
-  pipeline = [
+  '''pipeline = [
     {'$match': {'vhost': vhost_id}},
     {'$sort': {'timestamp': -1}},\
     {'$project': {'remote_host': 1}},
@@ -133,7 +133,25 @@ def getLastVisitorsList(vhost_id = None, count = None):
       }\
     },\
     {'$limit': count}
+  ]'''
+  pipeline = [
+    {'$match': {'vhost': vhost_id}},
+    {'$project': {'_id':0, 'remote_host': 1, 'maxVal': {'val': "$timestamp"}, 'firstUa': {'ua': "$user_agent"}}},
+    {'$group':
+      {'_id':{"remote_host": "$remote_host"},\
+       'count': {"$sum": 1},\
+        'maxTs': {"$max":"$maxVal"},
+        'lastUa': {"$last": "$lastUa"}
+      }\
+    },\
+    {'$project': {'_id':0,"remote_host":"$_id.remote_host", \
+                  "count": "$count", \
+                  "timestamp": "$maxTs.val", \
+                  "user_agent": "$lastUa.ua"}},
+    {'$sort': {'timestamp': -1}},\
+    {'$limit': count}
   ]
+
 
   q = db.command('aggregate', config.aplogCollection, pipeline=pipeline)
   #print "pipeline is ::::", pipeline, "\n^^^^^^^^^^^^^^^\n"
