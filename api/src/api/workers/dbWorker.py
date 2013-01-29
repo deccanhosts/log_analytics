@@ -209,6 +209,7 @@ def getResponse2(hostname = None, visitors_count = None):
   resp_dict = {}
   resp_dict['resp_struct'] = {}
   resp_dict['resp_struct']['last_visits_struct'] = visitors_dict
+  print "&^&^&^&^&^&^& >>>>>>>>> ", resp_dict
   workerLogger.debug("response is :: " + str(resp_dict))
   return resp_dict, True, ""    
   
