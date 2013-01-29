@@ -77,6 +77,7 @@ class StatsHandler( BaseHandler ):
           if visitors_count > 500:
             return apiHelper.badRequest(code = 121, detail = "visitor count too large!")
           resp_dict, retval, err_msg = dbWorker.getResponse2(hostname = hostname, visitors_count = visitors_count)
+          print "resp dict here:::----------->>>>>>>>>>> ", resp_dict
           if retval is False:
             return apiHelper.badRequest(code = 108, detail = err_msg)
           resp_obj, retval, err_msg = apiHelper.constructRespObj(resp_dict = resp_dict,
